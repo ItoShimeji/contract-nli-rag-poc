@@ -4,6 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "cli": "node src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -18,6 +24,9 @@
   },
   "type": "module",
   "devDependencies": {
+    "@types/node": "^26.0.1",
+    "oxfmt": "^0.56.0",
+    "oxlint": "^1.71.0",
     "typescript": "7.0.1-rc"
   },
   "dependencies": {
