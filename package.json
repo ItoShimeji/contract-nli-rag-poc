@@ -34,6 +34,7 @@
     "@tanstack/ai": "^0.37.0",
     "@tanstack/ai-openai": "^0.15.8",
     "gunshi": "^0.35.1",
+    "openai": "^6.45.0",
     "valibot": "^1.4.1"
   }
 }

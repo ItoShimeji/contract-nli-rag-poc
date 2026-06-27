@@ -216,6 +216,9 @@ importers:
       gunshi:
         specifier: ^0.35.1
         version: 0.35.1
+      openai:
+        specifier: ^6.45.0
+        version: 6.45.0(zod@3.25.76)
       valibot:
         specifier: ^1.4.1
         version: 1.4.1(typescript@7.0.1-rc)
