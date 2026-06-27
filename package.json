@@ -12,9 +12,17 @@
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "^11.5.2",
+      "version": "11.5.2",
       "onFail": "download"
     }
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "typescript": "7.0.1-rc"
+  },
+  "dependencies": {
+    "@tanstack/ai": "^0.37.0",
+    "@tanstack/ai-openai": "^0.15.8",
+    "gunshi": "^0.35.1"
+  }
 }
