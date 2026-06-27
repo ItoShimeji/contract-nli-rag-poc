@@ -1,6 +1,8 @@
 import fs from "node:fs/promises";
 import { cli, define } from "gunshi";
 import * as v from "valibot";
+
+import { config } from "./config.js";
 import { DocumentSchema } from "./types.js";
 import type { EmbeddingItem } from "./embedding/types.js";
 import { splitChunks } from "./input.js";
@@ -11,7 +13,7 @@ const embedCommand = define({
   name: "embed",
   description: "Generate embedding data",
   run: async () => {
-    const raw = await fs.readFile("data/sample.json", "utf8");
+    const raw = await fs.readFile(config.dataPath, "utf8");
     const dataset = JSON.parse(raw);
     const documetsData = dataset.documents;
 
@@ -38,7 +40,7 @@ const embedCommand = define({
     const embeddingImtes: EmbeddingItem[] = [];
     for (const document of validatedDocuments) {
       const chunks = splitChunks(document.text, document.spans);
-      const embeddingResults = await embed(chunks, "text-embedding-3-small");
+      const embeddingResults = await embed(chunks, config.embeddingModel);
 
       for (const result of embeddingResults) {
         embeddingImtes.push({
@@ -51,12 +53,12 @@ const embedCommand = define({
     }
 
     const embeddingCache = createEmbeddingCache(
-      "data/sample.json",
-      "text-embedding-3-small",
+      config.dataPath,
+      config.embeddingModel,
       embeddingImtes,
     );
 
-    await saveEmbeddingCache("data/cache/cache.json", embeddingCache);
+    await saveEmbeddingCache(config.cachePath, embeddingCache);
   },
 });
 
