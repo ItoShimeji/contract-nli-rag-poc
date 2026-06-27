@@ -1,63 +1,28 @@
-import fs from "node:fs/promises";
 import { cli, define } from "gunshi";
-import * as v from "valibot";
 
 import { config } from "./config.js";
-import { DocumentSchema } from "./types.js";
-import type { EmbeddingItem } from "./embedding/types.js";
-import { splitChunks } from "./input.js";
-import { embed } from "./embedding/embed.js";
 import { createEmbeddingCache, saveEmbeddingCache } from "./embedding/cache.js";
+import { createEmbeddingItems } from "./embedding/embed.js";
+import { loadContractNliDataset } from "./dataset.js";
 
 const embedCommand = define({
   name: "embed",
   description: "Generate embedding data",
   run: async () => {
-    const raw = await fs.readFile(config.dataPath, "utf8");
-    const dataset = JSON.parse(raw);
-    const documetsData = dataset.documents;
+    // データセットからドキュメントを読み込み
+    const validatedDocuments = await loadContractNliDataset(config.dataPath);
 
-    const documents = documetsData.map((d: any) => {
-      const annotationSet = d.annotation_sets[0];
-      const annotations = Object.entries(annotationSet.annotations).map(
-        ([hypothesisId, annotation]) => ({
-          hypothesisId,
-          label: (annotation as any).choice,
-          spanIds: (annotation as any).spans,
-        }),
-      );
+    // 埋め込みベクトルを取得
+    const embeddingItems = await createEmbeddingItems(validatedDocuments, config.embeddingModel);
 
-      return {
-        id: d.id,
-        text: d.text,
-        spans: d.spans,
-        annotations,
-      };
-    });
-
-    const validatedDocuments = v.parse(v.array(DocumentSchema), documents);
-
-    const embeddingImtes: EmbeddingItem[] = [];
-    for (const document of validatedDocuments) {
-      const chunks = splitChunks(document.text, document.spans);
-      const embeddingResults = await embed(chunks, config.embeddingModel);
-
-      for (const result of embeddingResults) {
-        embeddingImtes.push({
-          key: `contract-nli:${document.id}:span:${result.index}`,
-          documentId: document.id,
-          spanIndex: result.index,
-          embedding: result.embedding,
-        });
-      }
-    }
-
+    // キャッシュオブジェクトを生成
     const embeddingCache = createEmbeddingCache(
       config.dataPath,
       config.embeddingModel,
-      embeddingImtes,
+      embeddingItems,
     );
 
+    // キャッシュを保存
     await saveEmbeddingCache(config.cachePath, embeddingCache);
   },
 });
