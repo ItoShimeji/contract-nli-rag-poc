@@ -18,3 +18,11 @@ export const DocumentSchema = v.object({
 });
 
 export type Document = v.InferOutput<typeof DocumentSchema>;
+
+export const HypothesisSchema = v.object({
+  id: v.string(),
+  description: v.string(),
+  text: v.string(),
+});
+
+export type Hypothesis = v.InferOutput<typeof HypothesisSchema>;

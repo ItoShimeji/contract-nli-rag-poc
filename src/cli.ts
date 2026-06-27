@@ -10,10 +10,10 @@ const embedCommand = define({
   description: "Generate embedding data",
   run: async () => {
     // データセットからドキュメントを読み込み
-    const validatedDocuments = await loadContractNliDataset(config.dataPath);
+    const { documents } = await loadContractNliDataset(config.dataPath);
 
     // 埋め込みベクトルを取得
-    const embeddingItems = await createEmbeddingItems(validatedDocuments, config.embeddingModel);
+    const embeddingItems = await createEmbeddingItems(documents, config.embeddingModel);
 
     // キャッシュオブジェクトを生成
     const embeddingCache = createEmbeddingCache(
@@ -30,8 +30,10 @@ const embedCommand = define({
 const directCommand = define({
   name: "direct",
   description: "Run Direct Rag",
-  run: () => {
-    console.error("todo");
+  run: async () => {
+    const { documents, hypotheses } = await loadContractNliDataset(config.dataPath);
+
+    console.log({ documents, hypotheses });
   },
 });
 
