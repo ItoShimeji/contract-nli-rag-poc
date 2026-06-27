@@ -4,6 +4,8 @@ import { config } from "./config.js";
 import { createEmbeddingCache, saveEmbeddingCache } from "./embedding/cache.js";
 import { createEmbeddingItems } from "./embedding/embed.js";
 import { loadContractNliDataset } from "./dataset.js";
+import { createDirectMethod } from "./methods/direct/index.js";
+import type { PredictionResult } from "./methods/types.js";
 
 const embedCommand = define({
   name: "embed",
@@ -32,6 +34,29 @@ const directCommand = define({
   description: "Run Direct Rag",
   run: async () => {
     const { documents, hypotheses } = await loadContractNliDataset(config.dataPath);
+
+    const method = createDirectMethod({ model: config.generationModel });
+
+    const results: PredictionResult[] = [];
+
+    for (const document of documents) {
+      const documentInput = {
+        id: document.id,
+        text: document.text,
+        spans: document.spans,
+      };
+
+      for (const hypothesis of hypotheses) {
+        const example = {
+          hypothesisId: hypothesis.id,
+          hypothesis: hypothesis.text,
+        };
+
+        // ドキュメント & 仮説 を直列で一つずつ実行
+        const result = await method.run({ example, document: documentInput });
+        results.push(result);
+      }
+    }
 
     console.log({ documents, hypotheses });
   },

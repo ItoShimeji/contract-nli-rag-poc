@@ -1,6 +1,8 @@
 import * as v from "valibot";
 
-const LabelSchema = v.picklist(["Entailment", "Contradiction", "NotMentioned"]);
+export const LabelSchema = v.picklist(["Entailment", "Contradiction", "NotMentioned"]);
+
+export type Label = v.InferOutput<typeof LabelSchema>;
 
 const spanSchema = v.tuple([v.number(), v.number()]);
 
