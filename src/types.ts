@@ -18,13 +18,3 @@ export const DocumentSchema = v.object({
 });
 
 export type Document = v.InferOutput<typeof DocumentSchema>;
-
-// interface Document {
-//   id: number;
-//   file_name: string;
-//   text: string;
-//   document_type: string;
-//   url: string;
-//   spans: [[number, number]];
-//   annotation_sets: [{ annotations }];
-// }

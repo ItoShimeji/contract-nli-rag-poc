@@ -2,6 +2,10 @@ import fs from "node:fs/promises";
 import { cli, define } from "gunshi";
 import * as v from "valibot";
 import { DocumentSchema } from "./types.js";
+import type { EmbeddingItem } from "./embedding/types.js";
+import { splitChunks } from "./input.js";
+import { embed } from "./embedding/embed.js";
+import { createEmbeddingCache, saveEmbeddingCache } from "./embedding/cache.js";
 
 const embedCommand = define({
   name: "embed",
@@ -29,8 +33,30 @@ const embedCommand = define({
       };
     });
 
-    const ValidatedDocuments = v.parse(v.array(DocumentSchema), documents);
-    console.log(ValidatedDocuments);
+    const validatedDocuments = v.parse(v.array(DocumentSchema), documents);
+
+    const embeddingImtes: EmbeddingItem[] = [];
+    for (const document of validatedDocuments) {
+      const chunks = splitChunks(document.text, document.spans);
+      const embeddingResults = await embed(chunks, "text-embedding-3-small");
+
+      for (const result of embeddingResults) {
+        embeddingImtes.push({
+          key: `contract-nli:${document.id}:span:${result.index}`,
+          documentId: document.id,
+          spanIndex: result.index,
+          embedding: result.embedding,
+        });
+      }
+    }
+
+    const embeddingCache = createEmbeddingCache(
+      "data/sample.json",
+      "text-embedding-3-small",
+      embeddingImtes,
+    );
+
+    await saveEmbeddingCache("data/cache/cache.json", embeddingCache);
   },
 });
 
