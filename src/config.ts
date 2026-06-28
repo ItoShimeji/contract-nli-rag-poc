@@ -3,6 +3,7 @@ export type ExperimentConfig = {
   embeddingModel: string;
   dataPath: string;
   cachePath: string;
+  resultDir: string;
   topK: number;
 };
 
@@ -11,5 +12,6 @@ export const config: ExperimentConfig = {
   embeddingModel: "text-embedding-3-small",
   dataPath: "data/sample.json",
   cachePath: "data/cache/cache.json",
+  resultDir: "result",
   topK: 3,
 };

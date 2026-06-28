@@ -54,8 +54,29 @@ src/
   contract-nli/             # ContractNLI 固有の型・データセット処理
   embedding/                # embedding 生成と cache 保存
   methods/                  # 判定手法
+  results/                  # 実行結果ファイルの型・保存形式
   usecases/                 # CLI から呼び出すユースケース
 ```
+
+## 実行結果と評価の方針
+
+LLM/API を呼び出す実行と、結果の評価・集計は分離します。
+
+```text
+method を実行
+  -> prediction, gold label, usage, latency を結果ファイルに記録
+  -> 後から結果ファイルを読み込んで精度・コスト・遅延を集計
+```
+
+生成される結果ファイルは、データセット名と method 名で整理します。
+
+```text
+results/
+  direct.json
+  direct.summary.json
+```
+
+結果ファイルには method の名前・設定、入力データセット、各 document / hypothesis ごとの予測、正解ラベル、token 使用量、レイテンシを残します。評価コマンドは LLM/API を再実行せず、この結果ファイルを入力として扱います。
 
 ## 検証したいこと
 

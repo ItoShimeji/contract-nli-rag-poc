@@ -40,6 +40,6 @@ export type Usage = {
   totalTokens: number;
 };
 
-type Latency = {
+export type Latency = {
   totalMs: number;
 };
