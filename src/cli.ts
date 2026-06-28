@@ -1,7 +1,7 @@
 import { cli, define } from "gunshi";
 
 import { config } from "./config.js";
-import { loadContractNliDataset } from "./contract-nli/dataset.js";
+import { loadContractNliDataset } from "./contract-nli/load.js";
 import { createDirectMethod } from "./methods/direct/index.js";
 import type { PredictionResult } from "./methods/types.js";
 import { embedContractNli } from "./usecases/embedContractNli.js";

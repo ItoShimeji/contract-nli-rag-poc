@@ -28,3 +28,8 @@ export const HypothesisSchema = v.object({
 });
 
 export type Hypothesis = v.InferOutput<typeof HypothesisSchema>;
+
+export type Dataset = {
+  documents: Document[];
+  hypotheses: Hypothesis[];
+};

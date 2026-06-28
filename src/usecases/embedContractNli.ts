@@ -1,5 +1,5 @@
 import type { ExperimentConfig } from "../config.js";
-import { loadContractNliDataset } from "../contract-nli/dataset.js";
+import { loadContractNliDataset } from "../contract-nli/load.js";
 import { createEmbeddingCache, saveEmbeddingCache } from "../embedding/cache.js";
 import { createEmbeddingItems } from "../embedding/embed.js";
 

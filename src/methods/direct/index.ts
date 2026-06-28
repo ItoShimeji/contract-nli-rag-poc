@@ -1,6 +1,6 @@
 import { createChunksPrompt } from "../index.js";
 import { measureAsync } from "../measureAsync.js";
-import { splitChunks } from "../../contract-nli/dataset.js";
+import { splitChunks } from "../../contract-nli/chunk.js";
 import type { PredictionMethod, PredictionInput, PredictionResult } from "../types.js";
 import type { DirectConfig, DirectDeps } from "./types.js";
 import { llmClient } from "./llm.js";
