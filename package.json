@@ -15,7 +15,8 @@
     "fmt:check": "oxfmt --check",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest",
+    "test:watch": "vitest watch"
   },
   "dependencies": {
     "@tanstack/ai": "^0.37.0",
@@ -28,7 +29,8 @@
     "@types/node": "^26.0.1",
     "oxfmt": "^0.56.0",
     "oxlint": "^1.71.0",
-    "typescript": "7.0.1-rc"
+    "typescript": "7.0.1-rc",
+    "vitest": "^4.1.9"
   },
   "devEngines": {
     "packageManager": {
