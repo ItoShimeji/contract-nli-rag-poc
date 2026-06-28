@@ -1,4 +1,4 @@
-import type { Label } from "../types.js";
+import type { Label } from "../contract-nli/types.js";
 
 export type PredictionMethod = {
   name: string;

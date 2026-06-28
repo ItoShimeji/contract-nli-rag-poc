@@ -4,7 +4,7 @@ import { openaiText } from "@tanstack/ai-openai";
 import type { OpenAIChatModel } from "@tanstack/ai-openai";
 import * as v from "valibot";
 
-import { LabelSchema } from "../../types.js";
+import { LabelSchema } from "../../contract-nli/types.js";
 import type { LlmClient } from "./types.js";
 import type { Usage } from "../types.js";
 

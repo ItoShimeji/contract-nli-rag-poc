@@ -1,8 +1,8 @@
 import OpenAI from "openai";
 
-import type { Document } from "../types.js";
+import type { Document } from "../contract-nli/types.js";
+import { splitChunks } from "../contract-nli/dataset.js";
 import type { EmbeddingItem } from "./types.js";
-import { splitChunks } from "../dataset.js";
 
 const openai = new OpenAI();
 

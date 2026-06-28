@@ -1,4 +1,4 @@
-type ExperimentConfig = {
+export type ExperimentConfig = {
   generationModel: string;
   embeddingModel: string;
   dataPath: string;
