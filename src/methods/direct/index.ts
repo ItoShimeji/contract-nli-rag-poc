@@ -1,9 +1,8 @@
-import { createChunksPrompt } from "../index.js";
 import { measureAsync } from "../measureAsync.js";
-import { splitChunks } from "../../contract-nli/chunk.js";
 import type { PredictionMethod, PredictionInput, PredictionResult } from "../types.js";
 import type { DirectConfig, DirectDeps } from "./types.js";
 import { llmClient } from "./llm.js";
+import { createPrompt } from "./prompt.js";
 
 export function createDirectMethod(config: DirectConfig): PredictionMethod {
   const deps = { llmClient };
@@ -34,17 +33,4 @@ async function runDirectMethod(
     usage: result.usage,
     latency: { totalMs: durationMs },
   };
-}
-
-function createPrompt(input: PredictionInput): string {
-  const chunks = splitChunks(input.document.text, input.document.spans);
-  const chunksPrompt = createChunksPrompt(chunks);
-
-  return `
-## 仮説
-${input.example.hypothesis}
-
-## 契約文書
-${chunksPrompt}
-  `;
 }
