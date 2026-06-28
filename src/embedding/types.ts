@@ -1,3 +1,7 @@
+type EmbeddingResult = { index: number; embedding: number[] }[];
+
+export type Embed = (input: string[], model: string) => Promise<EmbeddingResult>;
+
 export type EmbeddingItem = {
   key: string;
   documentId: number;

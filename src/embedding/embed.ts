@@ -1,11 +1,11 @@
 import OpenAI from "openai";
 
+import type { Embed } from "./types.js";
+
 const openai = new OpenAI();
 
-type EmbeddingResult = { index: number; embedding: number[] }[];
-
 // document の chunk 列を埋め込み化
-export async function embed(input: string[], model: string): Promise<EmbeddingResult> {
+export const embed: Embed = async (input, model) => {
   // input 配列に対する結果が res.data に配列で入る
   const res = await openai.embeddings.create({
     model,
@@ -16,4 +16,4 @@ export async function embed(input: string[], model: string): Promise<EmbeddingRe
     index: d.index,
     embedding: d.embedding,
   }));
-}
+};

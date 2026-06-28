@@ -1,14 +1,14 @@
 import { splitChunks } from "../contract-nli/chunk.js";
 import type { Document } from "../contract-nli/types.js";
-import { embed } from "./embed.js";
-import type { EmbeddingItem } from "./types.js";
+import type { Embed, EmbeddingItem } from "./types.js";
 
 export async function createEmbeddingItems(
-  validatedDocuments: Document[],
+  documents: Document[],
   embeddingModel: string,
+  embed: Embed,
 ): Promise<EmbeddingItem[]> {
   const embeddingItems: EmbeddingItem[] = [];
-  for (const document of validatedDocuments) {
+  for (const document of documents) {
     const chunks = splitChunks(document.text, document.spans);
     const embeddingResults = await embed(chunks, embeddingModel);
 
