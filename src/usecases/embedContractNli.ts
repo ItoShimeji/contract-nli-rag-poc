@@ -1,7 +1,8 @@
 import type { ExperimentConfig } from "../config.js";
 import { loadContractNliDataset } from "../contract-nli/load.js";
-import { createEmbeddingCache, saveEmbeddingCache } from "../embedding/cache.js";
-import { createEmbeddingItems } from "../embedding/embed.js";
+import { createEmbeddingCache } from "../embedding/cache.js";
+import { createEmbeddingItems } from "../embedding/items.js";
+import { saveEmbeddingCache } from "../embedding/store.js";
 
 export async function embedContractNli(config: ExperimentConfig): Promise<void> {
   const { documents } = await loadContractNliDataset(config.dataPath);
