@@ -2,6 +2,7 @@ import type { Document } from "../contract-nli/types.js";
 import { createResultRecords } from "./record.js";
 import type { ResultInput } from "./types.js";
 import { writeResult } from "./write.js";
+import { getResultFilePath } from "./path.js";
 
 export async function saveResult(
   resultDir: string,
@@ -11,7 +12,7 @@ export async function saveResult(
 ): Promise<void> {
   const records = createResultRecords(results, documents);
 
-  const resultPath = `${resultDir}/${method.name}.json`;
+  const resultPath = getResultFilePath(resultDir, method.name);
 
   await writeResult(resultPath, method, records);
 }
