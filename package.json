@@ -15,7 +15,7 @@
     "fmt:check": "oxfmt --check",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "test": "vitest",
+    "test": "vitest run",
     "test:watch": "vitest watch"
   },
   "dependencies": {
