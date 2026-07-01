@@ -8,9 +8,9 @@ export type ExperimentConfig = {
 };
 
 export const config: ExperimentConfig = {
-  generationModel: "gpt-5-mini",
+  generationModel: "gpt-5.4-nano",
   embeddingModel: "text-embedding-3-small",
-  dataPath: "data/sample.json",
+  dataPath: "data/sample-min.json",
   cachePath: "data/cache/cache.json",
   resultDir: "result",
   topK: 3,
