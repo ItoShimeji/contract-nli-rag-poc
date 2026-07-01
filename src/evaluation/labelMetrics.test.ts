@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import type { ConfusionStats, LabelMetrics } from "./types.js";
+import { expectMetricValueToBe, expectMetricValueToBeCloseTo } from "../metric.js";
 import { createLabelMetrics } from "./labelMetrics.js";
 
 describe("createLabelMetrics", () => {
@@ -22,15 +23,40 @@ describe("createLabelMetrics", () => {
 
     expect(stats).toStrictEqual(original);
   });
+
+  test("分母が 0 の metric は null として扱える", () => {
+    expectLabelMetrics(createLabelMetrics(zeroSupportStats), {
+      total: 0,
+      correct: 0,
+      accuracy: null,
+      precision: 0,
+      recall: null,
+      f1: null,
+    });
+  });
 });
 
 function expectLabelMetrics(actual: LabelMetrics, expected: LabelMetrics): void {
   expect(actual.total).toBe(expected.total);
   expect(actual.correct).toBe(expected.correct);
-  expect(actual.accuracy).toBeCloseTo(expected.accuracy);
-  expect(actual.precision).toBeCloseTo(expected.precision);
-  expect(actual.recall).toBeCloseTo(expected.recall);
-  expect(actual.f1).toBeCloseTo(expected.f1);
+
+  expectMetricValue(actual.accuracy, expected.accuracy, "accuracy");
+  expectMetricValue(actual.precision, expected.precision, "precision");
+  expectMetricValue(actual.recall, expected.recall, "recall");
+  expectMetricValue(actual.f1, expected.f1, "f1");
+}
+
+function expectMetricValue(
+  actual: LabelMetrics["accuracy"],
+  expected: LabelMetrics["accuracy"],
+  label: string,
+): void {
+  if (expected === null) {
+    expectMetricValueToBe(actual, expected, label);
+    return;
+  }
+
+  expectMetricValueToBeCloseTo(actual, expected, 2, label);
 }
 
 const stats: ConfusionStats = {
@@ -39,4 +65,12 @@ const stats: ConfusionStats = {
   fp: 2,
   fn: 4,
   tn: 11,
+};
+
+const zeroSupportStats: ConfusionStats = {
+  total: 0,
+  tp: 0,
+  fp: 1,
+  fn: 0,
+  tn: 16,
 };

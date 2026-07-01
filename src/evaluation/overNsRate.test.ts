@@ -4,12 +4,16 @@ import { calcOverNsRates } from "./overNsRate.js";
 
 describe("getOverNsRates", () => {
   // 1..=20 の公差1の等差数列を生成し、それをランダム順にする
-  const latencies = Array.from({ length: 20 }, (_, i) => i + 1);
+  const latencies = Array.from({ length: 200 }, (_, i) => i + 1);
 
   for (let i = latencies.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [latencies[i], latencies[j]] = [latencies[j]!, latencies[i]!];
   }
+
+  latencies.forEach((value, index) => {
+    latencies[index] = value * 100;
+  });
 
   test("1..=20 のランダム順数列の over ns rate を計算する", () => {
     const rates = calcOverNsRates(latencies);

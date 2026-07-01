@@ -1,3 +1,4 @@
+import type { MetricValue } from "../metric.js";
 import type { Label } from "../contract-nli/types.js";
 
 // 分類指標は「特定の label かどうか」を label ごとに見て計算する。
@@ -28,11 +29,11 @@ export type LabelEvaluationSummary = {
   // 行を goldLabel、列を predictedLabel とする件数表
   confusionMatrix: ConfusionMatrix;
   // 各 label の f1 を単純平均
-  macroF1: number;
+  macroF1: MetricValue;
   // 全 label の TP / FP / FN を合算して算出した f1
-  microF1: number;
+  microF1: MetricValue;
   // 各 label の f1 を support 件数で重み付け平均
-  weightedF1: number;
+  weightedF1: MetricValue;
 };
 
 export type LabelMetrics = {
@@ -41,13 +42,13 @@ export type LabelMetrics = {
   // 対象 label で predictedLabel === goldLabel だった件数
   correct: number;
   // correct / total
-  accuracy: number;
+  accuracy: MetricValue;
   // TP / (TP + FP)
-  precision: number;
+  precision: MetricValue;
   // TP / (TP + FN)
-  recall: number;
+  recall: MetricValue;
   // 2 * precision * recall / (precision + recall)
-  f1: number;
+  f1: MetricValue;
 };
 
 export type ConfusionStats = {

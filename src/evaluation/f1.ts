@@ -1,10 +1,12 @@
-import type { ConfusionStatsRecord, Metrics } from "./types.js";
+import type { MetricValue } from "../metric.js";
+import { divideOrNull, isMetricNumber, meanOrNull } from "../metric.js";
+import type { ConfusionStatsRecord, LabelMetrics, Metrics } from "./types.js";
 
-export function calcMacroF1(metrics: Metrics): number {
-  return (metrics.Entailment.f1 + metrics.NotMentioned.f1 + metrics.Contradiction.f1) / 3;
+export function calcMacroF1(metrics: Metrics): MetricValue {
+  return meanOrNull(Object.values(metrics).map((metric) => metric.f1));
 }
 
-export function calcMicroF1(stats: ConfusionStatsRecord): number {
+export function calcMicroF1(stats: ConfusionStatsRecord): MetricValue {
   let tp = 0;
   let fp = 0;
   let fn = 0;
@@ -17,17 +19,23 @@ export function calcMicroF1(stats: ConfusionStatsRecord): number {
       fn += stats.fn;
     });
 
-  const precision = tp / (tp + fp);
-  const recall = tp / (tp + fn);
+  const precision = divideOrNull(tp, tp + fp);
+  const recall = divideOrNull(tp, tp + fn);
+  if (precision === null || recall === null) return null;
 
-  return (2 * precision * recall) / (precision + recall);
+  return divideOrNull(2 * precision * recall, precision + recall);
 }
 
-export function calcWeightedF1(metrics: Metrics): number {
-  return (
-    (metrics.Entailment.total * metrics.Entailment.f1 +
-      metrics.NotMentioned.total * metrics.NotMentioned.f1 +
-      metrics.Contradiction.total * metrics.Contradiction.f1) /
-    (metrics.Entailment.total + metrics.NotMentioned.total + metrics.Contradiction.total)
-  );
+export function calcWeightedF1(metrics: Metrics): MetricValue {
+  const validMetrics = Object.values(metrics).filter(hasWeightedF1);
+  const total = validMetrics.reduce((sum, metric) => sum + metric.total, 0);
+  if (total === 0) return null;
+
+  return validMetrics.reduce((sum, metric) => sum + metric.total * metric.f1, 0) / total;
 }
+
+type LabelMetricsWithF1 = LabelMetrics & { f1: number };
+
+const hasWeightedF1 = (metric: LabelMetrics): metric is LabelMetricsWithF1 => {
+  return metric.total > 0 && isMetricNumber(metric.f1);
+};

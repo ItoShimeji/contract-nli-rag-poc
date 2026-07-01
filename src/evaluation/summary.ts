@@ -11,7 +11,7 @@ export function createEvaluationSummary(records: ResultRecord[]): EvaluationSumm
   return {
     total,
     correct,
-    accuracy: correct / correct,
+    accuracy: correct / total,
     labels: createLabelEvaluationSummary(records),
     usage: createUsageEvaluationSummary(records),
     latency: createLatencyEvaluationSummary(records),
