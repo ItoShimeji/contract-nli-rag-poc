@@ -1,43 +1,52 @@
-import { expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 
-import type { EmbeddingItem } from "./types.js";
-import { createEmbeddingCache } from "./cache.js";
+import type { DocumentEmbeddingItem, HypothesisEmbeddingItem } from "./types.js";
+import { createDocumentsEmbeddingCache, createHypothesesEmbeddingCache } from "./cache.js";
 
-const INPUT_FILE_PATH = "example/sample.json";
-const MODEL = "example_model";
-const DIMENSIONS = 6;
-const embedding = Array.from({ length: DIMENSIONS }, () => 0);
+describe("createDocumentsEmbeddingCache", () => {
+  test("embedding cache オブジェクトを生成する", () => {
+    const result = createDocumentsEmbeddingCache(documentItems);
 
-test("embedding cache オブジェクトを生成する", () => {
-  const result = createEmbeddingCache(INPUT_FILE_PATH, MODEL, embeddingItems);
-
-  expect(result.source.inputFile).toBe(INPUT_FILE_PATH);
-  expect(result.embedding.model).toBe(MODEL);
-  expect(result.embedding.dimensions).toBe(DIMENSIONS);
-  expect(result.items).toHaveProperty("contract-nli:1:span:0");
-  expect(result.embedding.totalTokens).toBe(1000);
+    expect(result.items).toHaveProperty("contract-nli:document:1:span:0");
+    expect(result.totalTokens).toBe(1000);
+  });
 });
 
-const embeddingItems: EmbeddingItem[] = [
+describe("createHypothesesEmbeddingCache", () => {
+  test("embedding cache オブジェクトを生成する", () => {
+    const result = createHypothesesEmbeddingCache(hypothesisItems);
+
+    expect(result.items).toHaveProperty("contract-nli:hypothesis:nda-1");
+    expect(result.totalTokens).toBe(600);
+  });
+});
+
+const documentItems: DocumentEmbeddingItem[] = [
   {
-    key: "contract-nli:1:span:0",
+    key: "contract-nli:document:1:span:0",
     documentId: 1,
     spanIndex: 0,
-    embedding,
+    embedding: [],
     tokens: 200,
   },
   {
-    key: "contract-nli:1:span:1",
+    key: "contract-nli:document:1:span:1",
     documentId: 1,
     spanIndex: 1,
-    embedding,
+    embedding: [],
     tokens: 300,
   },
   {
-    key: "contract-nli:2:span:0",
+    key: "contract-nli:document:2:span:0",
     documentId: 2,
     spanIndex: 0,
-    embedding,
+    embedding: [],
     tokens: 500,
   },
+];
+
+const hypothesisItems: HypothesisEmbeddingItem[] = [
+  { key: "contract-nli:hypothesis:nda-1", hypothesisId: "nda-1", embedding: [], tokens: 100 },
+  { key: "contract-nli:hypothesis:nda-2", hypothesisId: "nda-2", embedding: [], tokens: 200 },
+  { key: "contract-nli:hypothesis:nda-3", hypothesisId: "nda-3", embedding: [], tokens: 300 },
 ];

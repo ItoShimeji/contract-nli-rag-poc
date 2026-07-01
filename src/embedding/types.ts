@@ -4,7 +4,7 @@ type EmbeddingResult = { results: { index: number; embedding: number[] }[]; toke
 
 export type Embed = (openai: OpenAI, input: string[], model: string) => Promise<EmbeddingResult>;
 
-export type EmbeddingItem = {
+export type DocumentEmbeddingItem = {
   key: string;
   documentId: number;
   spanIndex: number;
@@ -12,13 +12,14 @@ export type EmbeddingItem = {
   tokens: number;
 };
 
-export type EmbeddingCacheItem = {
-  documentId: number;
-  spanIndex: number;
+export type HypothesisEmbeddingItem = {
+  key: string;
+  hypothesisId: string;
   embedding: number[];
+  tokens: number;
 };
 
-export type EmbeddingCache = {
+export type EmbeddingMetadata = {
   version: 1;
   source: {
     dataset: "contract-nli";
@@ -28,8 +29,27 @@ export type EmbeddingCache = {
     provider: "openai";
     model: string;
     dimensions: number;
-    totalTokens: number;
   };
   createdAt: string;
-  items: Record<string, EmbeddingCacheItem>;
+};
+
+export type DocumentsEmbeddingCache = {
+  totalTokens: number;
+  items: Record<string, DocumentEmbeddingCacheItem>;
+};
+
+export type DocumentEmbeddingCacheItem = {
+  documentId: number;
+  spanIndex: number;
+  embedding: number[];
+};
+
+export type HypothesesEmbeddingCache = {
+  totalTokens: number;
+  items: Record<string, HypothesisEmbeddingCacheItem>;
+};
+
+export type HypothesisEmbeddingCacheItem = {
+  hypothesisId: string;
+  embedding: number[];
 };

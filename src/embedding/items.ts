@@ -1,18 +1,19 @@
 import type OpenAI from "openai";
 
+import type { Document, Hypothesis } from "../contract-nli/types.js";
+import type { Embed, DocumentEmbeddingItem, HypothesisEmbeddingItem } from "./types.js";
 import { splitChunks } from "../contract-nli/chunk.js";
-import type { Document } from "../contract-nli/types.js";
 import { noopProgress, type ProgressReporter } from "../progress.js";
-import type { Embed, EmbeddingItem } from "./types.js";
+import { createDocumentKey, createHypothesisKey } from "./key.js";
 
-export async function createEmbeddingItems(
+export async function createDocumentEmbeddingItems(
   openai: OpenAI,
   documents: Document[],
   embeddingModel: string,
   embed: Embed,
   progress: ProgressReporter = noopProgress,
-): Promise<EmbeddingItem[]> {
-  const embeddingItems: EmbeddingItem[] = [];
+): Promise<DocumentEmbeddingItem[]> {
+  const embeddingItems: DocumentEmbeddingItem[] = [];
 
   progress.start(`Embedding documents: ${documents.length}`);
 
@@ -24,13 +25,44 @@ export async function createEmbeddingItems(
 
     for (const result of results) {
       embeddingItems.push({
-        key: `contract-nli:${document.id}:span:${result.index}`,
+        key: createDocumentKey(document.id, result.index),
         documentId: document.id,
         spanIndex: result.index,
         embedding: result.embedding,
         tokens,
       });
     }
+  }
+
+  progress.update(`Created embedding items: ${embeddingItems.length}`);
+
+  return embeddingItems;
+}
+
+export async function createHypothesisEmbeddingItems(
+  openai: OpenAI,
+  hypotheses: Hypothesis[],
+  embeddingModel: string,
+  embed: Embed,
+  progress: ProgressReporter = noopProgress,
+): Promise<HypothesisEmbeddingItem[]> {
+  const embeddingItems: HypothesisEmbeddingItem[] = [];
+
+  progress.start(`Embedding hypotheses: ${hypotheses.length}`);
+
+  const embeddingInput = hypotheses.map(({ text }) => text);
+
+  const { results, tokens } = await embed(openai, embeddingInput, embeddingModel);
+
+  for (const result of results) {
+    const id = hypotheses[result.index]!.id;
+
+    embeddingItems.push({
+      key: createHypothesisKey(id),
+      hypothesisId: id,
+      embedding: result.embedding,
+      tokens,
+    });
   }
 
   progress.update(`Created embedding items: ${embeddingItems.length}`);

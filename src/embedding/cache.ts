@@ -1,25 +1,19 @@
-import type { EmbeddingItem, EmbeddingCacheItem, EmbeddingCache } from "./types.js";
+import type {
+  EmbeddingMetadata,
+  DocumentEmbeddingItem,
+  DocumentsEmbeddingCache,
+  DocumentEmbeddingCacheItem,
+  HypothesisEmbeddingItem,
+  HypothesesEmbeddingCache,
+  HypothesisEmbeddingCacheItem,
+} from "./types.js";
 
 // ファイルに書き出すキャッシュの JS オブジェクトを作成
-export function createEmbeddingCache(
+export function createEmbeddingCacheMetadata(
   inputFilePath: string,
   model: string,
-  embeddingItems: EmbeddingItem[],
-): EmbeddingCache {
-  const items: Record<string, EmbeddingCacheItem> = {};
-  let totalTokens = 0;
-
-  for (const e of embeddingItems) {
-    items[e.key] = {
-      documentId: e.documentId,
-      spanIndex: e.spanIndex,
-      embedding: e.embedding,
-    };
-    totalTokens += e.tokens;
-  }
-
-  const now = new Date().toISOString();
-
+  dimensions: number,
+): EmbeddingMetadata {
   return {
     version: 1,
     source: {
@@ -29,10 +23,49 @@ export function createEmbeddingCache(
     embedding: {
       provider: "openai",
       model,
-      dimensions: embeddingItems[0]?.embedding.length ?? 0,
-      totalTokens,
+      dimensions,
     },
-    createdAt: now,
+    createdAt: new Date().toISOString(),
+  };
+}
+
+export function createDocumentsEmbeddingCache(
+  documentEmbeddingItems: DocumentEmbeddingItem[],
+): DocumentsEmbeddingCache {
+  const items: Record<string, DocumentEmbeddingCacheItem> = {};
+  let totalTokens = 0;
+
+  for (const e of documentEmbeddingItems) {
+    items[e.key] = {
+      documentId: e.documentId,
+      spanIndex: e.spanIndex,
+      embedding: e.embedding,
+    };
+    totalTokens += e.tokens;
+  }
+
+  return {
+    totalTokens,
+    items,
+  };
+}
+
+export function createHypothesesEmbeddingCache(
+  hypothesisEmbeddingItems: HypothesisEmbeddingItem[],
+): HypothesesEmbeddingCache {
+  const items: Record<string, HypothesisEmbeddingCacheItem> = {};
+  let totalTokens = 0;
+
+  for (const e of hypothesisEmbeddingItems) {
+    items[e.key] = {
+      hypothesisId: e.hypothesisId,
+      embedding: e.embedding,
+    };
+    totalTokens += e.tokens;
+  }
+
+  return {
+    totalTokens,
     items,
   };
 }
