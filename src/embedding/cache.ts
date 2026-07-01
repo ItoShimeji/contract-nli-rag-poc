@@ -7,6 +7,7 @@ export function createEmbeddingCache(
   embeddingItems: EmbeddingItem[],
 ): EmbeddingCache {
   const items: Record<string, EmbeddingCacheItem> = {};
+  let totalTokens = 0;
 
   for (const e of embeddingItems) {
     items[e.key] = {
@@ -14,6 +15,7 @@ export function createEmbeddingCache(
       spanIndex: e.spanIndex,
       embedding: e.embedding,
     };
+    totalTokens += e.tokens;
   }
 
   const now = new Date().toISOString();
@@ -28,6 +30,7 @@ export function createEmbeddingCache(
       provider: "openai",
       model,
       dimensions: embeddingItems[0]?.embedding.length ?? 0,
+      totalTokens,
     },
     createdAt: now,
     items,

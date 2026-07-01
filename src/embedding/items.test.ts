@@ -1,17 +1,20 @@
 import { expect, test } from "vitest";
+import type OpenAI from "openai";
 
 import { createEmbeddingItems } from "./items.js";
 import type { Embed } from "./types.js";
 import type { Document } from "../contract-nli/types.js";
 
 const DIMENSIONS = 6;
+const openaiMock = {} as OpenAI;
 
 test("embed api を呼び出し embedding items を生成する", async () => {
-  const result = await createEmbeddingItems(documents, "example_model", embedMock);
+  const result = await createEmbeddingItems(openaiMock, documents, "example_model", embedMock);
 
   expect(result.length).toBe(6);
   expect(result[0]!.embedding.length).toBe(DIMENSIONS);
   expect(result.find((item) => item.key === "contract-nli:34:span:0")).toBeTruthy();
+  expect(result[0]!.tokens).toBe(4);
 });
 
 const documents: Document[] = [
@@ -37,9 +40,12 @@ const documents: Document[] = [
   },
 ];
 
-const embedMock: Embed = async (input, _) => {
-  return input.map((_, index) => ({
-    index,
-    embedding: Array.from({ length: DIMENSIONS }, () => Math.random()),
-  }));
+const embedMock: Embed = async (_, input) => {
+  return {
+    results: input.map((_, index) => ({
+      index,
+      embedding: Array.from({ length: DIMENSIONS }, () => Math.random()),
+    })),
+    tokens: input.length,
+  };
 };

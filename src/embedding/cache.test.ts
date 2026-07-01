@@ -15,6 +15,7 @@ test("embedding cache オブジェクトを生成する", () => {
   expect(result.embedding.model).toBe(MODEL);
   expect(result.embedding.dimensions).toBe(DIMENSIONS);
   expect(result.items).toHaveProperty("contract-nli:1:span:0");
+  expect(result.embedding.totalTokens).toBe(1000);
 });
 
 const embeddingItems: EmbeddingItem[] = [
@@ -23,17 +24,20 @@ const embeddingItems: EmbeddingItem[] = [
     documentId: 1,
     spanIndex: 0,
     embedding,
+    tokens: 200,
   },
   {
     key: "contract-nli:1:span:1",
     documentId: 1,
     spanIndex: 1,
     embedding,
+    tokens: 300,
   },
   {
     key: "contract-nli:2:span:0",
     documentId: 2,
     spanIndex: 0,
     embedding,
+    tokens: 500,
   },
 ];

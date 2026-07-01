@@ -1,12 +1,15 @@
-type EmbeddingResult = { index: number; embedding: number[] }[];
+import type OpenAI from "openai";
 
-export type Embed = (input: string[], model: string) => Promise<EmbeddingResult>;
+type EmbeddingResult = { results: { index: number; embedding: number[] }[]; tokens: number };
+
+export type Embed = (openai: OpenAI, input: string[], model: string) => Promise<EmbeddingResult>;
 
 export type EmbeddingItem = {
   key: string;
   documentId: number;
   spanIndex: number;
   embedding: number[];
+  tokens: number;
 };
 
 export type EmbeddingCacheItem = {
@@ -25,6 +28,7 @@ export type EmbeddingCache = {
     provider: "openai";
     model: string;
     dimensions: number;
+    totalTokens: number;
   };
   createdAt: string;
   items: Record<string, EmbeddingCacheItem>;
