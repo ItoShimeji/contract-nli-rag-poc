@@ -8,8 +8,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "cli": "pnpm run build && node dist/cli.js",
+    "build": "tsc -p tsconfig.build.json",
+    "cli": "pnpm run build && dotenvx run --overload -- node dist/cli.js",
     "typecheck": "tsc --noEmit",
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check",
