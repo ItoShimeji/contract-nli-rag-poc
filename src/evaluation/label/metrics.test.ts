@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vitest";
 
-import type { ConfusionStats, LabelMetrics } from "./types.js";
-import { expectMetricValueToBe, expectMetricValueToBeCloseTo } from "../metric.js";
-import { createLabelMetrics } from "./labelMetrics.js";
+import type { ConfusionStats, LabelMetrics } from "../types.js";
+import { expectMetricValueToBe, expectMetricValueToBeCloseTo } from "../../metric.js";
+import { createLabelMetrics } from "./metrics.js";
 
 describe("createLabelMetrics", () => {
   test("confusion stats から label ごとの metrics を計算できる", () => {

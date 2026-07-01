@@ -1,4 +1,4 @@
-import type { NumberStats } from "./types.js";
+import type { NumberStats } from "../types.js";
 
 export function calcNumberStats(numbers: number[]): NumberStats {
   const sorted = numbers.toSorted((a, b) => a - b);

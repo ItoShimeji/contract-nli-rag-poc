@@ -1,5 +1,5 @@
-import type { ConfusionStats, LabelMetrics } from "./types.js";
-import { divideOrNull } from "../metric.js";
+import type { ConfusionStats, LabelMetrics } from "../types.js";
+import { divideOrNull } from "../../metric.js";
 
 export function createLabelMetrics(stats: ConfusionStats): LabelMetrics {
   const { total, tp, fp, fn } = stats;

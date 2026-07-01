@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
-import type { ConfusionMatrix } from "./types.js";
-import type { ConfusionStatsRecord } from "./types.js";
+import type { ConfusionMatrix } from "../types.js";
+import type { ConfusionStatsRecord } from "../types.js";
 import { createConfusionStats } from "./confusionStats.js";
 
 describe("createConfusionStats", () => {

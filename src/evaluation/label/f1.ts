@@ -1,6 +1,6 @@
-import type { MetricValue } from "../metric.js";
-import { divideOrNull, isMetricNumber, meanOrNull } from "../metric.js";
-import type { ConfusionStatsRecord, LabelMetrics, Metrics } from "./types.js";
+import type { MetricValue } from "../../metric.js";
+import { divideOrNull, isMetricNumber, meanOrNull } from "../../metric.js";
+import type { ConfusionStatsRecord, LabelMetrics, Metrics } from "../types.js";
 
 export function calcMacroF1(metrics: Metrics): MetricValue {
   return meanOrNull(Object.values(metrics).map((metric) => metric.f1));

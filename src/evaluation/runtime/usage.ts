@@ -1,6 +1,6 @@
-import type { ResultRecord } from "../results/types.js";
-import type { UsageEvaluationSummary } from "./types.js";
-import { calcNumberStats } from "./numberStats.js";
+import type { ResultRecord } from "../../results/types.js";
+import type { UsageEvaluationSummary } from "../types.js";
+import { calcNumberStats } from "../stats/numberStats.js";
 
 export function createUsageEvaluationSummary(records: ResultRecord[]): UsageEvaluationSummary {
   const inputTokens: number[] = [];

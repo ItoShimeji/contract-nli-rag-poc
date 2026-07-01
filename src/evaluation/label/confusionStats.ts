@@ -1,6 +1,6 @@
-import type { Label } from "../contract-nli/types.js";
-import type { ConfusionMatrix } from "./types.js";
-import type { ConfusionStats, ConfusionStatsRecord } from "./types.js";
+import type { Label } from "../../contract-nli/types.js";
+import type { ConfusionMatrix } from "../types.js";
+import type { ConfusionStats, ConfusionStatsRecord } from "../types.js";
 
 export function createConfusionStats(matrix: ConfusionMatrix): ConfusionStatsRecord {
   const labels: Label[] = ["Entailment", "NotMentioned", "Contradiction"];

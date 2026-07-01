@@ -1,7 +1,7 @@
 import { describe, test } from "vitest";
 
-import { expectMetricValueToBe, expectMetricValueToBeCloseTo } from "../metric.js";
-import type { ConfusionStatsRecord, Metrics } from "./types.js";
+import { expectMetricValueToBe, expectMetricValueToBeCloseTo } from "../../metric.js";
+import type { ConfusionStatsRecord, Metrics } from "../types.js";
 import { calcMacroF1, calcMicroF1, calcWeightedF1 } from "./f1.js";
 
 describe("calcMacroF1", () => {

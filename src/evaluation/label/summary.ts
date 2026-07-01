@@ -1,8 +1,8 @@
-import type { ResultRecord } from "../results/types.js";
+import type { ResultRecord } from "../../results/types.js";
 import { createConfusionMatrix } from "./confusionMatrix.js";
 import { createConfusionStats } from "./confusionStats.js";
-import { createLabelMetrics } from "./labelMetrics.js";
-import type { LabelEvaluationSummary } from "./types.js";
+import { createLabelMetrics } from "./metrics.js";
+import type { LabelEvaluationSummary } from "../types.js";
 import { calcMacroF1, calcMicroF1, calcWeightedF1 } from "./f1.js";
 
 export function createLabelEvaluationSummary(records: ResultRecord[]): LabelEvaluationSummary {

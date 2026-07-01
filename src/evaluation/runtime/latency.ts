@@ -1,7 +1,7 @@
-import type { ResultRecord } from "../results/types.js";
-import type { LatencyEvaluationSummary } from "./types.js";
-import { calcNumberStats } from "./numberStats.js";
-import { calcOverNsRates } from "./overNsRate.js";
+import type { ResultRecord } from "../../results/types.js";
+import type { LatencyEvaluationSummary } from "../types.js";
+import { calcNumberStats } from "../stats/numberStats.js";
+import { calcOverNsRates } from "../stats/overNsRate.js";
 
 export function createLatencyEvaluationSummary(records: ResultRecord[]): LatencyEvaluationSummary {
   const totalMs_list = records.map((record) => record.latency.totalMs);

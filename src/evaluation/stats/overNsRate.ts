@@ -1,4 +1,4 @@
-import type { OverNsRates } from "./types.js";
+import type { OverNsRates } from "../types.js";
 
 export function calcOverNsRates(latenciesMs: number[]): OverNsRates {
   let length = latenciesMs.length;

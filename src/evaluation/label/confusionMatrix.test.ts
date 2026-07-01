@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vitest";
 
 import { createConfusionMatrix } from "./confusionMatrix.js";
-import type { Label } from "../contract-nli/types.js";
-import type { ResultRecord } from "../results/types.js";
-import type { ConfusionMatrix } from "./types.js";
+import type { Label } from "../../contract-nli/types.js";
+import type { ResultRecord } from "../../results/types.js";
+import type { ConfusionMatrix } from "../types.js";
 
 describe("createConfusionMatrix", () => {
   const labels: Label[] = ["Entailment", "NotMentioned", "Contradiction"];

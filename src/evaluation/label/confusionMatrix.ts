@@ -1,6 +1,6 @@
-import type { Label } from "../contract-nli/types.js";
-import type { ResultRecord } from "../results/types.js";
-import type { ConfusionMatrix } from "./types.js";
+import type { Label } from "../../contract-nli/types.js";
+import type { ResultRecord } from "../../results/types.js";
+import type { ConfusionMatrix } from "../types.js";
 
 export function createConfusionMatrix(records: ResultRecord[]): ConfusionMatrix {
   const matrix: ConfusionMatrix = {
