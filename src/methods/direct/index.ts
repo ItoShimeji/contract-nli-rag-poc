@@ -1,11 +1,13 @@
+import type OpenAI from "openai";
+
 import { measureAsync } from "../measureAsync.js";
 import type { PredictionMethod, PredictionInput, PredictionResult } from "../types.js";
 import type { DirectConfig, DirectDeps } from "./types.js";
 import { llmClient } from "./llm.js";
 import { createPrompt } from "./prompt.js";
 
-export function createDirectMethod(config: DirectConfig): PredictionMethod {
-  const deps = { llmClient };
+export function createDirectMethod(config: DirectConfig, openai: OpenAI): PredictionMethod {
+  const deps = { openai, llmClient };
 
   return {
     name: "direct",
@@ -24,7 +26,7 @@ async function runDirectMethod(
 
   // 実行時間を計測しながら LLM 呼び出し
   const { result, durationMs } = await measureAsync(
-    async () => await deps.llmClient(config.model, prompt),
+    async () => await deps.llmClient(deps.openai, config.model, prompt),
   );
 
   return {

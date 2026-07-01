@@ -210,12 +210,9 @@ importers:
       '@dotenvx/dotenvx':
         specifier: ^1.75.1
         version: 1.75.1
-      '@tanstack/ai':
-        specifier: ^0.37.0
-        version: 0.37.0
-      '@tanstack/ai-openai':
-        specifier: ^0.15.8
-        version: 0.15.8(@tanstack/ai@0.37.0)(zod@3.25.76)
+      '@valibot/to-json-schema':
+        specifier: ^1.7.1
+        version: 1.7.1(valibot@1.4.1(typescript@7.0.1-rc))
       gunshi:
         specifier: ^0.35.1
         version: 0.35.1
@@ -243,9 +240,6 @@ importers:
         version: 4.1.9(@types/node@26.0.1)(vite@8.1.0(@types/node@26.0.1))
 
 packages:
-
-  '@ag-ui/core@0.0.52':
-    resolution: {integrity: sha512-Xo0bUaNV56EqylzcrAuhUkQX7et7+SZIrqZZtEByGwEq/I1EHny6ZMkWHLkKR7UNi0FJZwJyhKYmKJS3B2SEgA==}
 
   '@dotenvx/dotenvx@1.75.1':
     resolution: {integrity: sha512-/BITOC9dmS/edY2zQwZNicQ059O6RKabtQfyEafV0nGtfYRNHYy1DIPiYVcov40+tob9hfmBnbR963dS+EQ1DQ==}
@@ -620,37 +614,6 @@ packages:
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
-  '@tanstack/ai-event-client@0.6.8':
-    resolution: {integrity: sha512-h7/HLz9u2LF9ba6uKFMnSZkFlkzQONJ5u3Hi+4qGxpsHyvcGRtW6v186jaFLoklndhEwyC49ytkC4eafi7Qq8w==}
-
-  '@tanstack/ai-openai@0.15.8':
-    resolution: {integrity: sha512-ifSu2ybVoO1ic72CuvYkCYemfSWhG4MEbY3rMzKeDTNxTWTlssHa/iTFfXGzLfjIqlFcrKPRG8cxwrND5whNBg==}
-    peerDependencies:
-      '@tanstack/ai': ^0.37.0
-      zod: ^4.0.0
-
-  '@tanstack/ai-utils@0.3.1':
-    resolution: {integrity: sha512-fgbjd5DohL3k5rTWr/KInauLVYMiHVm0cnmTsNrzL3cr4wWhEld5vmFSrjiwUWACAuONjZa+uBXuS+ZSO8fwDQ==}
-
-  '@tanstack/ai@0.37.0':
-    resolution: {integrity: sha512-5vM8XCBUyk6whQZ7gAiM1nX+NqvOAOZqAJrFxlo6g+vIvIfqfNqcD378E7kmZIIt5idFkzA8/IH/00oQDsZRyg==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      '@opentelemetry/api': '>=1.9.0'
-    peerDependenciesMeta:
-      '@opentelemetry/api':
-        optional: true
-
-  '@tanstack/devtools-event-client@0.4.4':
-    resolution: {integrity: sha512-6T5Yop/793YI+H+5J8Hsyj4kCih9sl4t3ElLgKioW5hk3ocn+ZdSJ94tT7vL7uabxSugWYBZlOTMPzEw2puvQw==}
-    engines: {node: '>=18'}
-    hasBin: true
-
-  '@tanstack/openai-base@0.9.4':
-    resolution: {integrity: sha512-8zhE5J2lkykoyGQSLdQETerKrxdBejjp5gwbhl8ZJutkQN+8hqsh3U0R2aZeS2WtpGmjsfNMDnCt79693Pyl/A==}
-    peerDependencies:
-      '@tanstack/ai': ^0.37.0
-
   '@tybys/wasm-util@0.10.3':
     resolution: {integrity: sha512-F3fo1MYrRJYL3zER0OUOmkutjr1Vp23m7OsSgp7nq4SP6OqX6C/56XFIPAl5bt3zaBRjmW7SGz3u/6LwFpYcOg==}
 
@@ -785,6 +748,11 @@ packages:
     engines: {node: '>=16.20.0'}
     cpu: [x64]
     os: [win32]
+
+  '@valibot/to-json-schema@1.7.1':
+    resolution: {integrity: sha512-3qkmU6KXWh8GIThEAW3kuRHPQBMjWkKy+Ppz3WkUucx53DTpOa6siMn4xDGSOhlVyMrDaJTCTMLYPZVAIk1P0A==}
+    peerDependencies:
+      valibot: ^1.4.0
 
   '@vitest/expect@4.1.9':
     resolution: {integrity: sha512-vl/rYsUKcBr3SnQn166+XR5ZQcgMx3DQhFWdfli/cWpLnLUmbxZvyrJZotLFUryib+LtArYMSTJ5RbQ57ZqrlA==}
@@ -1148,9 +1116,6 @@ packages:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
     engines: {node: '>=6'}
 
-  partial-json@0.1.7:
-    resolution: {integrity: sha512-Njv/59hHaokb/hRUjce3Hdv12wd60MtM9Z5Olmn+nehe0QDAsRtRbJPvJ0Z91TusF0SuZRIvnM+S4l6EIP8leA==}
-
   path-exists@3.0.0:
     resolution: {integrity: sha512-bpC7GYwiDYQ4wYLe+FA8lhRjhQCMcQGuSgGGqDkg/QerRWw9CmGRT0iSOVRSZJ29NMLZgIzqaljJ63oaL4NIJQ==}
     engines: {node: '>=4'}
@@ -1383,10 +1348,6 @@ packages:
 
 snapshots:
 
-  '@ag-ui/core@0.0.52':
-    dependencies:
-      zod: 3.25.76
-
   '@dotenvx/dotenvx@1.75.1':
     dependencies:
       '@dotenvx/primitives': 0.8.0
@@ -1602,47 +1563,6 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
-  '@tanstack/ai-event-client@0.6.8':
-    dependencies:
-      '@tanstack/devtools-event-client': 0.4.4
-
-  '@tanstack/ai-openai@0.15.8(@tanstack/ai@0.37.0)(zod@3.25.76)':
-    dependencies:
-      '@tanstack/ai': 0.37.0
-      '@tanstack/ai-utils': 0.3.1
-      '@tanstack/openai-base': 0.9.4(@tanstack/ai@0.37.0)(zod@3.25.76)
-      openai: 6.45.0(zod@3.25.76)
-      zod: 3.25.76
-    transitivePeerDependencies:
-      - '@aws-sdk/credential-provider-node'
-      - '@smithy/hash-node'
-      - '@smithy/signature-v4'
-      - ws
-
-  '@tanstack/ai-utils@0.3.1': {}
-
-  '@tanstack/ai@0.37.0':
-    dependencies:
-      '@ag-ui/core': 0.0.52
-      '@standard-schema/spec': 1.1.0
-      '@tanstack/ai-event-client': 0.6.8
-      '@tanstack/ai-utils': 0.3.1
-      partial-json: 0.1.7
-
-  '@tanstack/devtools-event-client@0.4.4': {}
-
-  '@tanstack/openai-base@0.9.4(@tanstack/ai@0.37.0)(zod@3.25.76)':
-    dependencies:
-      '@tanstack/ai': 0.37.0
-      '@tanstack/ai-utils': 0.3.1
-      openai: 6.45.0(zod@3.25.76)
-    transitivePeerDependencies:
-      - '@aws-sdk/credential-provider-node'
-      - '@smithy/hash-node'
-      - '@smithy/signature-v4'
-      - ws
-      - zod
-
   '@tybys/wasm-util@0.10.3':
     dependencies:
       tslib: 2.8.1
@@ -1720,6 +1640,10 @@ snapshots:
 
   '@typescript/typescript-win32-x64@7.0.1-rc':
     optional: true
+
+  '@valibot/to-json-schema@1.7.1(valibot@1.4.1(typescript@7.0.1-rc))':
+    dependencies:
+      valibot: 1.4.1(typescript@7.0.1-rc)
 
   '@vitest/expect@4.1.9':
     dependencies:
@@ -2032,8 +1956,6 @@ snapshots:
 
   p-try@2.2.0: {}
 
-  partial-json@0.1.7: {}
-
   path-exists@3.0.0: {}
 
   path-key@3.1.1: {}
@@ -2207,4 +2129,5 @@ snapshots:
 
   yoctocolors@2.1.2: {}
 
-  zod@3.25.76: {}
+  zod@3.25.76:
+    optional: true

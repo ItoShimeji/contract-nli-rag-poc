@@ -1,61 +1,71 @@
-import { chat } from "@tanstack/ai";
-import type { ChatMiddleware } from "@tanstack/ai";
-import { openaiText } from "@tanstack/ai-openai";
-import type { OpenAIChatModel } from "@tanstack/ai-openai";
 import * as v from "valibot";
+import { toJsonSchema } from "@valibot/to-json-schema";
 
 import { LabelSchema } from "../../contract-nli/types.js";
 import type { LlmClient } from "./types.js";
 import type { Usage } from "../types.js";
 
-const outputSchema = v.object({
+const PredictionSchema = v.object({
   label: LabelSchema,
   evidenceSpanIds: v.array(v.number()),
 });
 
+const predictionJsonSchema = {
+  ...toJsonSchema(PredictionSchema, { target: "draft-07" }),
+  additionalProperties: false,
+};
+const requestTimeoutMs = 120_000;
+
 // LLM 呼び出し client
-export const llmClient: LlmClient = async (model, prompt) => {
-  // 使用量をリセット
-  const usage: Usage = {
-    inputTokens: 0,
-    outputTokens: 0,
-    totalTokens: 0,
-  };
-
-  const usageMiddleware: ChatMiddleware = {
-    name: "usage",
-    onUsage: (_ctx, u) => {
-      usage.inputTokens += u.promptTokens;
-      usage.outputTokens += u.completionTokens;
-      usage.totalTokens += u.totalTokens;
-    },
-  };
-
-  const prediction = await chat({
-    // ここでの型 assertion は後で見直す必要がある
-    adapter: openaiText(model as OpenAIChatModel),
-    messages: [
-      {
-        role: "user",
-        content: prompt,
+export const llmClient: LlmClient = async (openai, model, prompt) => {
+  const response = await openai.responses.create(
+    {
+      model,
+      input: [
+        {
+          role: "system",
+          content: systemPrompt,
+        },
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+      max_output_tokens: 512,
+      reasoning: { effort: "none" },
+      text: {
+        format: {
+          type: "json_schema",
+          name: "contract_nli_prediction",
+          strict: true,
+          schema: predictionJsonSchema,
+        },
       },
-    ],
-    systemPrompts: [systemPrompt],
-    outputSchema,
-    middleware: [usageMiddleware],
-  });
+    },
+    { timeout: requestTimeoutMs },
+  );
 
   return {
-    prediction,
-    usage,
+    prediction: v.parse(PredictionSchema, JSON.parse(response.output_text)),
+    usage: toUsage(response.usage),
   };
 };
+
+function toUsage(
+  usage: { input_tokens: number; output_tokens: number; total_tokens: number } | undefined,
+): Usage {
+  return {
+    inputTokens: usage?.input_tokens ?? 0,
+    outputTokens: usage?.output_tokens ?? 0,
+    totalTokens: usage?.total_tokens ?? 0,
+  };
+}
 
 const systemPrompt = `
 # 仮説判定タスク
 - 提示された契約文書を根拠として、仮説を判定してください。
 - ラベルは Entailment、Contradiction、NotMentioned のいずれかです。
-- 根拠として使用したチャンク ID と短い説明も返してください。
+- 根拠として使用したチャンク ID を返してください。
 
 ## ラベル
 | ラベル        | 意味                             | 根拠 span |
