@@ -6,6 +6,8 @@ import type { LabelEvaluationSummary } from "../types.js";
 import { calcMacroF1, calcMicroF1, calcWeightedF1 } from "./f1.js";
 
 export function createLabelEvaluationSummary(records: ResultRecord[]): LabelEvaluationSummary {
+  const total = records.length;
+  const correct = records.filter((record) => record.goldLabel === record.predictedLabel).length;
   const matrix = createConfusionMatrix(records);
   const stats = createConfusionStats(matrix);
 
@@ -16,6 +18,9 @@ export function createLabelEvaluationSummary(records: ResultRecord[]): LabelEval
   };
 
   return {
+    total,
+    correct,
+    accuracy: correct / total,
     byGoldLabel: metrics,
     confusionMatrix: matrix,
     macroF1: calcMacroF1(metrics),

@@ -6,13 +6,10 @@ import { createUsageEvaluationSummary } from "./runtime/usage.js";
 
 export function createEvaluationSummary(records: ResultRecord[]): EvaluationSummary {
   const total = records.length;
-  const correct = records.filter((record) => record.goldLabel === record.predictedLabel).length;
 
   return {
     total,
-    correct,
-    accuracy: correct / total,
-    labels: createLabelEvaluationSummary(records),
+    label: createLabelEvaluationSummary(records),
     usage: createUsageEvaluationSummary(records),
     latency: createLatencyEvaluationSummary(records),
   };
