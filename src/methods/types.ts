@@ -1,3 +1,5 @@
+import type OpenAI from "openai";
+
 import type { Label } from "../contract-nli/types.js";
 
 export type PredictionMethod = {
@@ -5,8 +7,17 @@ export type PredictionMethod = {
   // コードベースで管理できる config をここで保持するのは、それぞれの呼び出し方法で
   // どの設定をしようしたかを明示的に保存するため
   config: Record<string, unknown>;
-  run(input: PredictionInput): Promise<PredictionResult>;
+  run: runMethod;
 };
+
+export type runMethod = (input: PredictionInput) => Promise<PredictionResult>;
+
+export type LlmClient = (
+  openai: OpenAI,
+  model: string,
+  systemPrompt: string,
+  prompt: string,
+) => Promise<{ prediction: Prediction; usage: Usage }>;
 
 export type PredictionInput = {
   example: Example;
@@ -43,3 +54,5 @@ export type Usage = {
 export type Latency = {
   totalMs: number;
 };
+
+export type Chunk = { index: number; text: string };

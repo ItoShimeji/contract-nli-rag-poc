@@ -8,6 +8,7 @@ import { runDirectMethod } from "./usecases/runDirectMethod.js";
 import { evaluate } from "./usecases/evaluate.js";
 import { getEnv } from "./env.js";
 import { consoleProgress } from "./progress.js";
+import { runRagMethod } from "./usecases/runRagMethod.js";
 
 const env = getEnv();
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
@@ -43,6 +44,14 @@ const directCommand = define({
   },
 });
 
+const ragCommand = define({
+  name: "rag",
+  description: "Run RAG Rag",
+  run: async () => {
+    await runRagMethod(config, openai, consoleProgress);
+  },
+});
+
 const evaluateCommand = define({
   name: "evaluate",
   description: "Evaluate result file",
@@ -59,11 +68,9 @@ const evaluateCommand = define({
 });
 
 const mainCommand = define({
-  name: "rag",
+  name: "contract-nli-rag-poc",
   description: "Contract NLI RAG POC",
-  run: () => {
-    console.log("Use a sub-command: embed or direct");
-  },
+  internal: true,
 });
 
 await cli(process.argv.slice(2), mainCommand, {
@@ -73,6 +80,7 @@ await cli(process.argv.slice(2), mainCommand, {
     test: testCommand,
     embed: embedCommand,
     direct: directCommand,
+    rag: ragCommand,
     evaluate: evaluateCommand,
   },
 });

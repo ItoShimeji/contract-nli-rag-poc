@@ -1,10 +1,16 @@
-// ドキュメントを chunk に分割
-export function splitChunks(text: string, spans: [number, number][]): string[] {
-  const chunks: string[] = [];
+import type { Chunk } from "../methods/types.js";
 
-  for (const span of spans) {
-    chunks.push(text.slice(span[0], span[1]));
-  }
+// ドキュメントを chunk に分割
+export function splitChunks(text: string, spans: [number, number][]): Chunk[] {
+  // const chunks: Chunk[] = [];
+
+  const chunks: Chunk[] = spans.map((span, index) => ({
+    index,
+    text: text.slice(span[0], span[1]),
+  }));
+  // for (const [index, span] of spans.entries()) {
+  //   chunks.push({ text: text.slice(span[0], span[1]) });
+  // }
 
   return chunks;
 }

@@ -20,8 +20,8 @@ export async function createDocumentEmbeddingItems(
   for (const [index, document] of documents.entries()) {
     progress.update(`[${index + 1}/${documents.length}] document ${document.id}`);
 
-    const chunks = splitChunks(document.text, document.spans);
-    const { results, tokens } = await embed(openai, chunks, embeddingModel);
+    const chunkTexts = splitChunks(document.text, document.spans).map((chunk) => chunk.text);
+    const { results, tokens } = await embed(openai, chunkTexts, embeddingModel);
 
     for (const result of results) {
       embeddingItems.push({

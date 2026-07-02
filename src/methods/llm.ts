@@ -1,9 +1,8 @@
 import * as v from "valibot";
 import { toJsonSchema } from "@valibot/to-json-schema";
 
-import { LabelSchema } from "../../contract-nli/types.js";
-import type { LlmClient } from "./types.js";
-import type { Usage } from "../types.js";
+import { LabelSchema } from "../contract-nli/types.js";
+import type { LlmClient, Usage } from "./types.js";
 
 const PredictionSchema = v.object({
   label: LabelSchema,
@@ -17,7 +16,7 @@ const predictionJsonSchema = {
 const requestTimeoutMs = 120_000;
 
 // LLM 呼び出し client
-export const llmClient: LlmClient = async (openai, model, prompt) => {
+export const llmClient: LlmClient = async (openai, model, systemPrompt, prompt) => {
   const response = await openai.responses.create(
     {
       model,
@@ -60,17 +59,3 @@ function toUsage(
     totalTokens: usage?.total_tokens ?? 0,
   };
 }
-
-const systemPrompt = `
-# 仮説判定タスク
-- 提示された契約文書を根拠として、仮説を判定してください。
-- ラベルは Entailment、Contradiction、NotMentioned のいずれかです。
-- 根拠として使用したチャンク ID を返してください。
-
-## ラベル
-| ラベル        | 意味                             | 根拠 span |
-| --------------| -------------------------------- | --------- |
-| Entailment    | 契約文書が仮説を支持する         | 原則あり  |
-| Contradiction | 契約文書が仮説と矛盾する         | 原則あり  |
-| NotMentioned  | 契約文書には判断できる記載がない | 空        |
-`;

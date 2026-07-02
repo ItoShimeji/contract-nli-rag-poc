@@ -6,4 +6,4 @@ dist/
 .env.keys
 
 data/
-result/
+results/

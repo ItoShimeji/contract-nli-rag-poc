@@ -19,6 +19,15 @@ export type HypothesisEmbeddingItem = {
   tokens: number;
 };
 
+export type EmbeddingData = EmbeddingCache & {
+  metadata: EmbeddingMetadata;
+};
+
+export type EmbeddingCache = {
+  documents: DocumentsEmbeddingCache;
+  hypotheses: HypothesesEmbeddingCache;
+};
+
 export type EmbeddingMetadata = {
   version: 1;
   source: {
