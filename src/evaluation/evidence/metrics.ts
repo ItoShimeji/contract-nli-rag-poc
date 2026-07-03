@@ -4,30 +4,35 @@ import type { EvidenceLabelMetrics } from "../types.js";
 import { isContainingGold } from "./spanIds/containsGold.js";
 import { isExactMatch } from "./spanIds/exactMatch.js";
 import { isOverlapping } from "./spanIds/overlap.js";
+import { isEvidenceEvaluable } from "./evaluable.js";
 
 export function createEvidenceLabelMetrics(records: ResultRecord[]): EvidenceLabelMetrics {
   const total = records.length;
-  const evaluated = total;
-  const correct = records.filter((record) =>
+  const evaluatedRecords = records.filter(isEvidenceEvaluable);
+  const evaluated = evaluatedRecords.length;
+  const correct = evaluatedRecords.filter((record) =>
     isExactMatch(record.goldEvidenceSpanIds, record.predictedEvidenceSpanIds),
   ).length;
-  const containsGoldCorrect = records.filter((record) =>
+  const containsGoldCorrect = evaluatedRecords.filter((record) =>
     isContainingGold(record.goldEvidenceSpanIds, record.predictedEvidenceSpanIds),
   ).length;
-  const hasOverlapCorrect = records.filter((record) =>
+  const hasOverlapCorrect = evaluatedRecords.filter((record) =>
     isOverlapping(record.goldEvidenceSpanIds, record.predictedEvidenceSpanIds),
   ).length;
 
-  const overlapCount = records.reduce(
+  const overlapCount = evaluatedRecords.reduce(
     (sum, record) =>
       sum + countOverlap(record.goldEvidenceSpanIds, record.predictedEvidenceSpanIds),
     0,
   );
-  const predictedCount = records.reduce(
+  const predictedCount = evaluatedRecords.reduce(
     (sum, record) => sum + record.predictedEvidenceSpanIds.length,
     0,
   );
-  const goldCount = records.reduce((sum, record) => sum + record.goldEvidenceSpanIds.length, 0);
+  const goldCount = evaluatedRecords.reduce(
+    (sum, record) => sum + record.goldEvidenceSpanIds.length,
+    0,
+  );
   const precision = divideOrNull(overlapCount, predictedCount);
   const recall = divideOrNull(overlapCount, goldCount);
 

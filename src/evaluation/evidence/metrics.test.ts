@@ -32,6 +32,28 @@ describe("createEvidenceLabelMetrics", () => {
     );
   });
 
+  test("NotMentioned は span 評価対象から除外する", () => {
+    expectEvidenceLabelMetrics(
+      createEvidenceLabelMetrics([
+        getMockResultRecord([1], [1], "Entailment"),
+        getMockResultRecord([], [], "NotMentioned"),
+      ]),
+      {
+        total: 2,
+        evaluated: 1,
+        correct: 1,
+        correctRate: 1,
+        precision: 1,
+        recall: 1,
+        f1: 1,
+        containsGoldCorrect: 1,
+        containsGoldRate: 1,
+        hasOverlapCorrect: 1,
+        hasOverlapRate: 1,
+      },
+    );
+  });
+
   test("入力 records に副作用を持たない", () => {
     const records = [getMockResultRecord([1, 2], [2, 1])];
     const original = structuredClone(records);
@@ -91,11 +113,12 @@ function expectMetricValue(
 function getMockResultRecord(
   goldEvidenceSpanIds: number[],
   predictedEvidenceSpanIds: number[],
+  goldLabel: Label = "Entailment",
 ): ResultRecord {
   return {
     documentId: 0,
     hypothesisId: "",
-    goldLabel: "Entailment" satisfies Label,
+    goldLabel,
     predictedLabel: "Entailment" satisfies Label,
     goldEvidenceSpanIds,
     predictedEvidenceSpanIds,

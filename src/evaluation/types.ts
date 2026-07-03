@@ -62,7 +62,7 @@ export type LabelMetrics = {
 export type EvidenceEvaluationSummary = {
   // evidence span 評価対象レコード数。
   // Entailment / Contradiction は通常 gold span があるので対象になる。
-  // NotMentioned は「根拠なし」を評価する場合は対象に含める。
+  // NotMentioned は label 評価だけで扱い、span 評価からは除外する。
   total: number;
   // 主指標の正解件数。
   // この研究ではまず exact match、つまり predictedEvidenceSpanIds と goldEvidenceSpanIds が
@@ -89,8 +89,7 @@ export type EvidenceLabelMetrics = {
   // goldLabel が対象 label だった件数
   total: number;
   // span 評価対象件数。
-  // NotMentioned で「根拠なし」を評価対象に含めるなら total と同じになる。
-  // NotMentioned を overlap 指標から除外する設計なら 0 になり得る。
+  // NotMentioned は span 評価から除外するため 0 になり得る。
   evaluated: number;
   // 対象 label で span が評価基準を満たした件数
   // この研究では exact match、つまり predictedEvidenceSpanIds と goldEvidenceSpanIds が
@@ -131,7 +130,7 @@ export type JointEvaluationSummary = {
   correct: number;
   // correct / total。
   // 「label も根拠 span も厳密に正しい」割合。
-  accuracy: number;
+  accuracy: MetricValue;
   // predictedLabel === goldLabel かつ predictedEvidenceSpanIds が goldEvidenceSpanIds をすべて含んだ件数。
   containsGoldCorrect: number;
   // containsGoldCorrect / total。
@@ -149,6 +148,9 @@ export type JointEvaluationSummary = {
 export type JointLabelMetrics = {
   // goldLabel が対象 label だった件数
   total: number;
+  // joint 評価対象件数。
+  // NotMentioned は span 評価から除外するため 0 になり得る。
+  evaluated: number;
   // 対象 label で label と evidence span の両方が正しかった件数
   // evidence span は exact match で判定する。
   correct: number;

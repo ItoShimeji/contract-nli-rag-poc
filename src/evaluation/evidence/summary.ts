@@ -6,14 +6,16 @@ import { isExactMatch } from "./spanIds/exactMatch.js";
 import { isContainingGold } from "./spanIds/containsGold.js";
 import { isOverlapping } from "./spanIds/overlap.js";
 import { createEvidenceLabelMetrics } from "./metrics.js";
+import { isEvidenceEvaluable } from "./evaluable.js";
 
 export function createEvidenceEvaluationSummary(
   records: ResultRecord[],
 ): EvidenceEvaluationSummary {
-  const total = records.length;
-  const correct = countCorrect(isExactMatch, records);
-  const containsGoldCorrect = countCorrect(isContainingGold, records);
-  const overlapCorrect = countCorrect(isOverlapping, records);
+  const evaluatedRecords = records.filter(isEvidenceEvaluable);
+  const total = evaluatedRecords.length;
+  const correct = countCorrect(isExactMatch, evaluatedRecords);
+  const containsGoldCorrect = countCorrect(isContainingGold, evaluatedRecords);
+  const overlapCorrect = countCorrect(isOverlapping, evaluatedRecords);
 
   return {
     total,

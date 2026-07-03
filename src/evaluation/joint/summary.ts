@@ -4,17 +4,19 @@ import type { JointEvaluationSummary, JointLabelMetrics } from "../types.js";
 import { isContainingGold } from "../evidence/spanIds/containsGold.js";
 import { isExactMatch } from "../evidence/spanIds/exactMatch.js";
 import { isOverlapping } from "../evidence/spanIds/overlap.js";
+import { isEvidenceEvaluable } from "../evidence/evaluable.js";
 
 export function createJointEvaluationSummary(records: ResultRecord[]): JointEvaluationSummary {
-  const total = records.length;
-  const correct = records.filter(isJointExactMatchCorrect).length;
-  const containsGoldCorrect = records.filter(isJointContainsGoldCorrect).length;
-  const hasOverlapCorrect = records.filter(isJointHasOverlapCorrect).length;
+  const evaluatedRecords = records.filter(isEvidenceEvaluable);
+  const total = evaluatedRecords.length;
+  const correct = evaluatedRecords.filter(isJointExactMatchCorrect).length;
+  const containsGoldCorrect = evaluatedRecords.filter(isJointContainsGoldCorrect).length;
+  const hasOverlapCorrect = evaluatedRecords.filter(isJointHasOverlapCorrect).length;
 
   return {
     total,
     correct,
-    accuracy: correct / total,
+    accuracy: divideOrNull(correct, total),
     containsGoldCorrect,
     containsGoldAccuracy: divideOrNull(containsGoldCorrect, total),
     hasOverlapCorrect,
@@ -35,18 +37,21 @@ export function createJointEvaluationSummary(records: ResultRecord[]): JointEval
 
 function createJointLabelMetrics(records: ResultRecord[]): JointLabelMetrics {
   const total = records.length;
-  const correct = records.filter(isJointExactMatchCorrect).length;
-  const containsGoldCorrect = records.filter(isJointContainsGoldCorrect).length;
-  const hasOverlapCorrect = records.filter(isJointHasOverlapCorrect).length;
+  const evaluatedRecords = records.filter(isEvidenceEvaluable);
+  const evaluated = evaluatedRecords.length;
+  const correct = evaluatedRecords.filter(isJointExactMatchCorrect).length;
+  const containsGoldCorrect = evaluatedRecords.filter(isJointContainsGoldCorrect).length;
+  const hasOverlapCorrect = evaluatedRecords.filter(isJointHasOverlapCorrect).length;
 
   return {
     total,
+    evaluated,
     correct,
-    accuracy: divideOrNull(correct, total),
+    accuracy: divideOrNull(correct, evaluated),
     containsGoldCorrect,
-    containsGoldAccuracy: divideOrNull(containsGoldCorrect, total),
+    containsGoldAccuracy: divideOrNull(containsGoldCorrect, evaluated),
     hasOverlapCorrect,
-    hasOverlapAccuracy: divideOrNull(hasOverlapCorrect, total),
+    hasOverlapAccuracy: divideOrNull(hasOverlapCorrect, evaluated),
   };
 }
 
