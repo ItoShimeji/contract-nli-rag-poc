@@ -79,6 +79,16 @@ results/
 
 結果ファイルには method の名前・設定、入力データセット、各 document / hypothesis ごとの予測、正解ラベル、token 使用量、レイテンシを残します。評価コマンドは LLM/API を再実行せず、この結果ファイルを入力として扱います。
 
+## 結果の可視化
+
+summary JSON から分析用の図を生成します。
+
+```sh
+uv run scripts/visualize_results.py \
+  --result-dir results/gpt-5.4-mini \
+  --out-dir analysis/gpt-5.4-mini
+```
+
 ## 検証したいこと
 
 - 契約全文を LLM に渡す direct 判定の限界
