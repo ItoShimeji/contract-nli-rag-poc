@@ -5,5 +5,5 @@ dist/
 
 .env.keys
 
-data/
-results/
+/data/
+/results/

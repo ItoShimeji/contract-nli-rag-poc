@@ -41,6 +41,7 @@ export const runRagMethod: Usecase<
 
   await saveResult(
     config.resultDir,
+    config.generationModel,
     documents,
     { name: method.name, config: method.config },
     results,

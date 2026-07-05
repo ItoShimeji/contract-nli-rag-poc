@@ -1,7 +1,11 @@
-export function getResultFilePath(resultDir: string, methodName: string): string {
-  return `${resultDir}/${methodName}.json`;
+export function getResultFilePath(resultDir: string, model: string, methodName: string): string {
+  return `${resultDir}/${model}/${methodName}.json`;
 }
 
-export function getEvaluationSummaryFilePath(resultDir: string, methodName: string): string {
-  return `${resultDir}/${methodName}.summary.json`;
+export function getEvaluationSummaryFilePath(
+  resultDir: string,
+  model: string,
+  methodName: string,
+): string {
+  return `${resultDir}/${model}/${methodName}.summary.json`;
 }

@@ -68,12 +68,13 @@ method を実行
   -> 後から結果ファイルを読み込んで精度・コスト・遅延を集計
 ```
 
-生成される結果ファイルは、データセット名と method 名で整理します。
+生成される結果ファイルは、生成モデル名と method 名で整理します。
 
 ```text
 results/
-  direct.json
-  direct.summary.json
+  gpt-5.4-nano/
+    direct.json
+    direct.summary.json
 ```
 
 結果ファイルには method の名前・設定、入力データセット、各 document / hypothesis ごとの予測、正解ラベル、token 使用量、レイテンシを残します。評価コマンドは LLM/API を再実行せず、この結果ファイルを入力として扱います。

@@ -25,6 +25,7 @@ export const runDirectMethod: Usecase<[openai: OpenAI, progress?: ProgressReport
 
   await saveResult(
     config.resultDir,
+    config.generationModel,
     documents,
     { name: method.name, config: method.config },
     results,
