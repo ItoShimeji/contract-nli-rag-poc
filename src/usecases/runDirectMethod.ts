@@ -19,6 +19,7 @@ export const runDirectMethod: Usecase<[openai: OpenAI, progress?: ProgressReport
   const results = await runPredictionMethod({
     run: method.run,
     progress,
+    concurrency: config.execution.methodConcurrency,
     input: { documents, hypotheses },
   });
 

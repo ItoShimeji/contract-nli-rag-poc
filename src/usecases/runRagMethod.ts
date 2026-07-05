@@ -35,6 +35,7 @@ export const runRagMethod: Usecase<
   const results = await runPredictionMethod({
     run: method.run,
     progress,
+    concurrency: config.execution.methodConcurrency,
     input: { documents, hypotheses },
   });
 

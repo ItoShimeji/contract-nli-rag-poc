@@ -134,6 +134,9 @@ type ExperimentConfig = {
     rerankerCandidateTopK: number;
     rerankerTopK: number;
   };
+  execution: {
+    methodConcurrency: number;
+  };
 };
 
 const config: ExperimentConfig = {
@@ -146,6 +149,9 @@ const config: ExperimentConfig = {
     simpleTopK: 5,
     rerankerCandidateTopK: 20,
     rerankerTopK: 5,
+  },
+  execution: {
+    methodConcurrency: 3,
   },
 };
 ```

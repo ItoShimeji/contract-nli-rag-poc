@@ -9,6 +9,9 @@ export type ExperimentConfig = {
     rerankerCandidateTopK: number;
     rerankerTopK: number;
   };
+  execution: {
+    methodConcurrency: number;
+  };
 };
 
 export const config: ExperimentConfig = {
@@ -21,5 +24,8 @@ export const config: ExperimentConfig = {
     simpleTopK: 5,
     rerankerCandidateTopK: 20,
     rerankerTopK: 5,
+  },
+  execution: {
+    methodConcurrency: 3,
   },
 };
