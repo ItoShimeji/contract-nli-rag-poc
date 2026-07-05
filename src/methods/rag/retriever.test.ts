@@ -49,7 +49,10 @@ describe("retrieve", () => {
 
     const result = retrieve(2, mockCalcSimilarity, embeddings);
 
-    expect(result).toEqual([0, 2]);
+    expect(result).toEqual([
+      { spanId: 0, score: 1 },
+      { spanId: 2, score: 0.8 },
+    ]);
   });
 
   it("span の数が k よりも小さい場合はエラーを投げる", () => {

@@ -4,7 +4,11 @@ export type ExperimentConfig = {
   dataPath: string;
   embeddingDir: string;
   resultDir: string;
-  topK: number;
+  rag: {
+    simpleTopK: number;
+    rerankerCandidateTopK: number;
+    rerankerTopK: number;
+  };
 };
 
 export const config: ExperimentConfig = {
@@ -13,5 +17,9 @@ export const config: ExperimentConfig = {
   dataPath: "data/sample.json",
   embeddingDir: "data/cache/embedding",
   resultDir: "results",
-  topK: 5,
+  rag: {
+    simpleTopK: 5,
+    rerankerCandidateTopK: 20,
+    rerankerTopK: 5,
+  },
 };

@@ -127,18 +127,26 @@ type ExperimentConfig = {
   generationModel: string;
   embeddingModel: string;
   dataPath: string;
-  cachePath: string;
+  embeddingDir: string;
   resultDir: string;
-  topK: number;
+  rag: {
+    simpleTopK: number;
+    rerankerCandidateTopK: number;
+    rerankerTopK: number;
+  };
 };
 
 const config: ExperimentConfig = {
-  generationModel: "gpt-5-mini",
+  generationModel: "gpt-5.4-nano",
   embeddingModel: "text-embedding-3-small",
   dataPath: "data/sample.json",
-  cachePath: "data/cache/cache.json",
-  resultDir: "result",
-  topK: 3,
+  embeddingDir: "data/cache/embedding",
+  resultDir: "results",
+  rag: {
+    simpleTopK: 5,
+    rerankerCandidateTopK: 20,
+    rerankerTopK: 5,
+  },
 };
 ```
 
@@ -289,8 +297,12 @@ PoC の CLI は、実行と評価を分ける。
 pnpm cli embed
 pnpm cli direct
 pnpm cli rag
+pnpm cli rag --pipeline rerank
+pnpm cli rag --pipeline rerank-verify
 pnpm cli evaluate direct
 pnpm cli evaluate rag
+pnpm cli evaluate rag-rerank
+pnpm cli evaluate rag-rerank-verify
 ```
 
 `embed` は embedding cache を作成する。`direct` と `rag` は method を実行して結果ファイルを保存する。`evaluate` は保存済みの結果ファイルを読み込み、精度、token、latency を集計する。

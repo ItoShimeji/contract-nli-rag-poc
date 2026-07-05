@@ -7,21 +7,30 @@ import { noopProgress, type ProgressReporter } from "../progress.js";
 import { saveResult } from "../results/save.js";
 import { loadEmbeddingCache } from "../embedding/load.js";
 import { runPredictionMethod } from "./helpers/runPredictionMethod.js";
+import type { RagPipeline } from "../methods/rag/types.js";
 
-export const runRagMethod: Usecase<[openai: OpenAI, progress?: ProgressReporter]> = async (
-  config,
-  openai,
-  progress = noopProgress,
-) => {
+export const runRagMethod: Usecase<
+  [openai: OpenAI, pipeline: RagPipeline, progress?: ProgressReporter]
+> = async (config, openai, pipeline, progress = noopProgress) => {
   const { documents, hypotheses } = await loadContractNliDataset(config.dataPath);
 
   const { documents: documentsEmbedding, hypotheses: hypothesesEmbedding } =
     await loadEmbeddingCache(config.embeddingDir, config.embeddingModel);
 
-  const method = createRagMethod({ model: config.generationModel, topK: config.topK }, openai, {
-    documents: documentsEmbedding,
-    hypotheses: hypothesesEmbedding,
-  });
+  const method = createRagMethod(
+    {
+      model: config.generationModel,
+      pipeline,
+      simpleTopK: config.rag.simpleTopK,
+      rerankerCandidateTopK: config.rag.rerankerCandidateTopK,
+      rerankerTopK: config.rag.rerankerTopK,
+    },
+    openai,
+    {
+      documents: documentsEmbedding,
+      hypotheses: hypothesesEmbedding,
+    },
+  );
 
   const results = await runPredictionMethod({
     run: method.run,
@@ -35,5 +44,5 @@ export const runRagMethod: Usecase<[openai: OpenAI, progress?: ProgressReporter]
     { name: method.name, config: method.config },
     results,
   );
-  progress.finish(`Saved direct results: ${results.length}`);
+  progress.finish(`Saved ${method.name} results: ${results.length}`);
 };

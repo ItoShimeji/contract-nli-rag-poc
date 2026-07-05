@@ -1,13 +1,11 @@
 import type OpenAI from "openai";
 
 import type { EmbeddingCache } from "../../embedding/types.js";
-import type { PredictionMethod, PredictionInput, PredictionResult } from "../types.js";
-import type { RagConfig, RagDeps } from "./types.js";
-import { measureAsync } from "../measureAsync.js";
+import type { PredictionMethod } from "../types.js";
+import type { RagConfig } from "./types.js";
 import { llmClient } from "../llm.js";
-import { createPrompt, systemPrompt } from "./prompt.js";
-import { createEmbeddingRetriever } from "./retriever.js";
-import { calcCosineSimilarity } from "./cosineSimilarity.js";
+import { systemPrompt } from "./prompt.js";
+import { runRagPipeline } from "./pipeline.js";
 
 export function createRagMethod(
   config: RagConfig,
@@ -17,35 +15,19 @@ export function createRagMethod(
   const deps = { openai, llmClient, systemPrompt, cache };
 
   return {
-    name: "rag",
+    name: getRagMethodName(config.pipeline),
     config,
-    run: (input) => runRagMethod(config, deps, input),
+    run: (input) => runRagPipeline(config, deps, input),
   };
 }
 
-// LLM 呼び出し
-async function runRagMethod(
-  config: RagConfig,
-  deps: RagDeps,
-  input: PredictionInput,
-): Promise<PredictionResult> {
-  const retriever = createEmbeddingRetriever(config.topK, deps.cache, calcCosineSimilarity);
-  const indexesTopK = retriever({
-    documentId: input.document.id,
-    hypothesisId: input.example.hypothesisId,
-  });
-
-  const prompt = createPrompt(input, indexesTopK);
-
-  // 実行時間を計測しながら LLM 呼び出し
-  const { result, durationMs } = await measureAsync(
-    async () => await deps.llmClient(deps.openai, config.model, deps.systemPrompt, prompt),
-  );
-
-  return {
-    label: result.prediction.label,
-    evidenceSpanIds: result.prediction.evidenceSpanIds,
-    usage: result.usage,
-    latency: { totalMs: durationMs },
-  };
+function getRagMethodName(pipeline: RagConfig["pipeline"]): string {
+  switch (pipeline) {
+    case "simple":
+      return "rag";
+    case "rerank":
+      return "rag-rerank";
+    case "rerank-verify":
+      return "rag-rerank-verify";
+  }
 }

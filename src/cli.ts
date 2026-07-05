@@ -9,6 +9,7 @@ import { evaluate } from "./usecases/evaluate.js";
 import { getEnv } from "./env.js";
 import { consoleProgress } from "./progress.js";
 import { runRagMethod } from "./usecases/runRagMethod.js";
+import type { RagPipeline } from "./methods/rag/types.js";
 
 const env = getEnv();
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
@@ -38,7 +39,7 @@ const embedCommand = define({
 
 const directCommand = define({
   name: "direct",
-  description: "Run Direct Rag",
+  description: "Run Direct method",
   run: async () => {
     await runDirectMethod(config, openai, consoleProgress);
   },
@@ -46,9 +47,18 @@ const directCommand = define({
 
 const ragCommand = define({
   name: "rag",
-  description: "Run RAG Rag",
-  run: async () => {
-    await runRagMethod(config, openai, consoleProgress);
+  description: "Run RAG pipeline",
+  args: {
+    pipeline: {
+      type: "string",
+      short: "p",
+      description: "RAG pipeline: simple, rerank, rerank-verify",
+      default: "simple",
+    },
+  },
+  run: async (ctx) => {
+    const pipeline = parseRagPipeline(ctx.values.pipeline);
+    await runRagMethod(config, openai, pipeline, consoleProgress);
   },
 });
 
@@ -84,3 +94,11 @@ await cli(process.argv.slice(2), mainCommand, {
     evaluate: evaluateCommand,
   },
 });
+
+function parseRagPipeline(value: string): RagPipeline {
+  if (value === "simple" || value === "rerank" || value === "rerank-verify") {
+    return value;
+  }
+
+  throw new Error(`Invalid RAG pipeline: ${value}`);
+}

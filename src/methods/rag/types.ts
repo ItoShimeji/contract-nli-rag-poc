@@ -3,9 +3,14 @@ import type OpenAI from "openai";
 import type { LlmClient } from "../types.js";
 import type { EmbeddingCache } from "../../embedding/types.js";
 
+export type RagPipeline = "simple" | "rerank" | "rerank-verify";
+
 export type RagConfig = {
   model: string;
-  topK: number;
+  pipeline: RagPipeline;
+  simpleTopK: number;
+  rerankerCandidateTopK: number;
+  rerankerTopK: number;
 };
 
 export type RagDeps = {

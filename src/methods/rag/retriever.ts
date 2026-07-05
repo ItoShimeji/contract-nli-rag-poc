@@ -2,13 +2,14 @@ import type { EmbeddingCache } from "../../embedding/types.js";
 import type { CalcSimilarity } from "./types.js";
 import type { DocumentsEmbeddingCache } from "../../embedding/types.js";
 import { createHypothesisKey } from "../../embedding/key.js";
+import type { RetrievedSpan } from "../types.js";
 
 type RetrieverInput = {
   documentId: number;
   hypothesisId: string;
 };
 
-type Retriever = (input: RetrieverInput) => number[];
+type Retriever = (input: RetrieverInput) => RetrievedSpan[];
 
 export type DocumentSpanEmbeddingsByDocumentId = Record<
   number,
@@ -51,7 +52,7 @@ export function retrieve(
   topK: number,
   calcSimilarity: CalcSimilarity,
   embeddings: { hypothesis: number[]; spans: Array<{ index: number; embedding: number[] }> },
-): number[] {
+): RetrievedSpan[] {
   if (embeddings.spans.length < topK) {
     throw new Error("top k を計算するのに十分な span の数がありません");
   }
@@ -63,5 +64,5 @@ export function retrieve(
     }))
     .toSorted((a, b) => b.similarity - a.similarity)
     .slice(0, topK)
-    .map(({ index }) => index);
+    .map(({ index, similarity }) => ({ spanId: index, score: similarity }));
 }

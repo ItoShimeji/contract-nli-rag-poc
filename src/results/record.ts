@@ -14,7 +14,7 @@ export function createResultRecords(results: ResultInput[], documents: Document[
       throw new Error("dataset に annotation が見つかりません");
     }
 
-    records.push({
+    const record: ResultRecord = {
       documentId: result.documentId,
       hypothesisId: result.hypothesisId,
       goldLabel: gold.label,
@@ -23,7 +23,13 @@ export function createResultRecords(results: ResultInput[], documents: Document[
       predictedEvidenceSpanIds: result.prediction.evidenceSpanIds,
       usage: result.prediction.usage,
       latency: result.prediction.latency,
-    });
+    };
+
+    if (result.prediction.stages) {
+      record.stages = result.prediction.stages;
+    }
+
+    records.push(record);
   }
 
   return records;

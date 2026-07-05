@@ -43,6 +43,7 @@ export type Prediction = {
 export type PredictionResult = Prediction & {
   usage: Usage;
   latency: Latency;
+  stages?: PredictionStages;
 };
 
 export type Usage = {
@@ -56,3 +57,41 @@ export type Latency = {
 };
 
 export type Chunk = { index: number; text: string };
+
+export type PredictionStages = {
+  retrieve?: RetrieveStageTrace;
+  rerank?: RerankStageTrace;
+  generate: GenerateStageTrace;
+  verify?: VerifyStageTrace;
+};
+
+export type RetrievedSpan = {
+  spanId: number;
+  score: number;
+};
+
+export type RetrieveStageTrace = {
+  latencyMs: number;
+  spans: RetrievedSpan[];
+};
+
+export type RerankStageTrace = {
+  usage: Usage;
+  latencyMs: number;
+  inputSpanIds: number[];
+  outputSpanIds: number[];
+};
+
+export type GenerateStageTrace = {
+  usage: Usage;
+  latencyMs: number;
+  prediction: Prediction;
+};
+
+export type VerifyStageTrace = {
+  usage: Usage;
+  latencyMs: number;
+  decision: "accept" | "revise";
+  predictionBefore: Prediction;
+  predictionAfter: Prediction;
+};

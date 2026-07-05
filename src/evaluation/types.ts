@@ -23,6 +23,8 @@ export type EvaluationSummary = {
   joint?: JointEvaluationSummary;
   usage: UsageEvaluationSummary;
   latency: LatencyEvaluationSummary;
+  stages?: StageRuntimeEvaluationSummary;
+  verifier?: VerifierEvaluationSummary;
 };
 
 export type LabelEvaluationSummary = {
@@ -196,6 +198,28 @@ export type UsageEvaluationSummary = {
 };
 
 export type LatencyEvaluationSummary = NumberStats & OverNsRates;
+
+export type StageRuntimeEvaluationSummary = Partial<
+  Record<
+    "retrieve" | "rerank" | "generate" | "verify",
+    {
+      count: number;
+      usage?: UsageEvaluationSummary;
+      latency: LatencyEvaluationSummary;
+    }
+  >
+>;
+
+export type VerifierEvaluationSummary = {
+  total: number;
+  acceptCount: number;
+  reviseCount: number;
+  revisionRate: MetricValue;
+  helpfulRevisionCount: number;
+  harmfulRevisionCount: number;
+  unchangedCorrectCount: number;
+  unchangedWrongCount: number;
+};
 
 export type OverNsRates = {
   // latency.totalMs > 1000 の割合

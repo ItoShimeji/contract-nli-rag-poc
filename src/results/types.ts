@@ -1,5 +1,5 @@
 import type { Label } from "../contract-nli/types.js";
-import type { Usage, Latency } from "../methods/types.js";
+import type { Usage, Latency, PredictionStages } from "../methods/types.js";
 import type { PredictionResult } from "../methods/types.js";
 
 export type ResultInput = {
@@ -25,6 +25,7 @@ export type ResultRecord = {
   predictedEvidenceSpanIds: number[];
   usage: Usage;
   latency: Latency;
+  stages?: PredictionStages;
 };
 
 export type GoldAnnotation = {
