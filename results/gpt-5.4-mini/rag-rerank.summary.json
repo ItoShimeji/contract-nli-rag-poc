@@ -1,0 +1,308 @@
+{
+  "total": 340,
+  "label": {
+    "total": 340,
+    "correct": 257,
+    "accuracy": 0.7558823529411764,
+    "byGoldLabel": {
+      "Entailment": {
+        "total": 163,
+        "correct": 140,
+        "accuracy": 0.8588957055214724,
+        "precision": 0.8284023668639053,
+        "recall": 0.8588957055214724,
+        "f1": 0.8433734939759036
+      },
+      "NotMentioned": {
+        "total": 133,
+        "correct": 78,
+        "accuracy": 0.5864661654135338,
+        "precision": 0.9285714285714286,
+        "recall": 0.5864661654135338,
+        "f1": 0.7188940092165897
+      },
+      "Contradiction": {
+        "total": 44,
+        "correct": 39,
+        "accuracy": 0.8863636363636364,
+        "precision": 0.4482758620689655,
+        "recall": 0.8863636363636364,
+        "f1": 0.5954198473282443
+      }
+    },
+    "confusionMatrix": {
+      "Entailment": {
+        "Entailment": 140,
+        "NotMentioned": 6,
+        "Contradiction": 17
+      },
+      "NotMentioned": {
+        "Entailment": 24,
+        "NotMentioned": 78,
+        "Contradiction": 31
+      },
+      "Contradiction": {
+        "Entailment": 5,
+        "NotMentioned": 0,
+        "Contradiction": 39
+      }
+    },
+    "macroF1": 0.7192291168402458,
+    "microF1": 0.7558823529411764,
+    "weightedF1": 0.7625919294891808
+  },
+  "evidence": {
+    "total": 207,
+    "correct": 73,
+    "correctRate": 0.3526570048309179,
+    "containsGoldCorrect": 136,
+    "containsGoldRate": 0.6570048309178744,
+    "hasOverlapCorrect": 200,
+    "hasOverlapRate": 0.966183574879227,
+    "byGoldLabel": {
+      "Entailment": {
+        "total": 163,
+        "evaluated": 163,
+        "correct": 61,
+        "correctRate": 0.37423312883435583,
+        "precision": 0.5660919540229885,
+        "recall": 0.6985815602836879,
+        "f1": 0.6253968253968253,
+        "containsGoldCorrect": 105,
+        "containsGoldRate": 0.6441717791411042,
+        "hasOverlapCorrect": 156,
+        "hasOverlapRate": 0.9570552147239264
+      },
+      "NotMentioned": {
+        "total": 133,
+        "evaluated": 0,
+        "correct": 0,
+        "correctRate": null,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "containsGoldCorrect": 0,
+        "containsGoldRate": null,
+        "hasOverlapCorrect": 0,
+        "hasOverlapRate": null
+      },
+      "Contradiction": {
+        "total": 44,
+        "evaluated": 44,
+        "correct": 12,
+        "correctRate": 0.2727272727272727,
+        "precision": 0.4700854700854701,
+        "recall": 0.6626506024096386,
+        "f1": 0.55,
+        "containsGoldCorrect": 31,
+        "containsGoldRate": 0.7045454545454546,
+        "hasOverlapCorrect": 44,
+        "hasOverlapRate": 1
+      }
+    }
+  },
+  "joint": {
+    "total": 207,
+    "correct": 66,
+    "accuracy": 0.3188405797101449,
+    "containsGoldCorrect": 121,
+    "containsGoldAccuracy": 0.5845410628019324,
+    "hasOverlapCorrect": 179,
+    "hasOverlapAccuracy": 0.8647342995169082,
+    "byGoldLabel": {
+      "Entailment": {
+        "total": 163,
+        "evaluated": 163,
+        "correct": 55,
+        "accuracy": 0.3374233128834356,
+        "containsGoldCorrect": 93,
+        "containsGoldAccuracy": 0.5705521472392638,
+        "hasOverlapCorrect": 140,
+        "hasOverlapAccuracy": 0.8588957055214724
+      },
+      "NotMentioned": {
+        "total": 133,
+        "evaluated": 0,
+        "correct": 0,
+        "accuracy": null,
+        "containsGoldCorrect": 0,
+        "containsGoldAccuracy": null,
+        "hasOverlapCorrect": 0,
+        "hasOverlapAccuracy": null
+      },
+      "Contradiction": {
+        "total": 44,
+        "evaluated": 44,
+        "correct": 11,
+        "accuracy": 0.25,
+        "containsGoldCorrect": 28,
+        "containsGoldAccuracy": 0.6363636363636364,
+        "hasOverlapCorrect": 39,
+        "hasOverlapAccuracy": 0.8863636363636364
+      }
+    }
+  },
+  "usage": {
+    "inputTokens": {
+      "total": 529644,
+      "mean": 1557.7764705882353,
+      "min": 1110,
+      "max": 2496,
+      "p50": 1478,
+      "p90": 1997,
+      "p95": 2269,
+      "p99": 2417
+    },
+    "outputTokens": {
+      "total": 18565,
+      "mean": 54.60294117647059,
+      "min": 41,
+      "max": 76,
+      "p50": 55,
+      "p90": 64,
+      "p95": 66,
+      "p99": 70
+    },
+    "totalTokens": {
+      "total": 548209,
+      "mean": 1612.379411764706,
+      "min": 1156,
+      "max": 2551,
+      "p50": 1531,
+      "p90": 2043,
+      "p95": 2333,
+      "p99": 2467
+    }
+  },
+  "latency": {
+    "over1sRate": 0,
+    "over3sRate": 0,
+    "over5sRate": 0,
+    "over10sRate": 0,
+    "total": 765142.7066399999,
+    "mean": 2250.4197254117644,
+    "min": 1576.7615829999995,
+    "max": 6061.636918,
+    "p50": 2092.1027909999975,
+    "p90": 2764.4311670000025,
+    "p95": 3697.697957999997,
+    "p99": 4309.431208999995
+  },
+  "stages": {
+    "retrieve": {
+      "count": 340,
+      "latency": {
+        "over1sRate": 0,
+        "over3sRate": 0,
+        "over5sRate": 0,
+        "over10sRate": 0,
+        "total": 235.96933799996722,
+        "mean": 0.6940274647057859,
+        "min": 0.15808400000000233,
+        "max": 4.157207999999997,
+        "p50": 0.5896659999998519,
+        "p90": 1.207791000000725,
+        "p95": 1.5713340000002063,
+        "p99": 1.7758329999996931
+      }
+    },
+    "rerank": {
+      "count": 340,
+      "usage": {
+        "inputTokens": {
+          "total": 301214,
+          "mean": 885.9235294117647,
+          "min": 583,
+          "max": 1397,
+          "p50": 839,
+          "p90": 1157,
+          "p95": 1312,
+          "p99": 1384
+        },
+        "outputTokens": {
+          "total": 9522,
+          "mean": 28.00588235294118,
+          "min": 18,
+          "max": 38,
+          "p50": 30,
+          "p90": 32,
+          "p95": 36,
+          "p99": 38
+        },
+        "totalTokens": {
+          "total": 310736,
+          "mean": 913.9294117647058,
+          "min": 615,
+          "max": 1419,
+          "p50": 867,
+          "p90": 1195,
+          "p95": 1336,
+          "p99": 1414
+        }
+      },
+      "latency": {
+        "over1sRate": 0.6,
+        "over3sRate": 0.01764705882352941,
+        "over5sRate": 0,
+        "over10sRate": 0,
+        "total": 382715.1390890003,
+        "mean": 1125.6327620264715,
+        "min": 691.8037500000064,
+        "max": 4966.802834,
+        "p50": 1038.3022079999937,
+        "p90": 1274.3835000000036,
+        "p95": 1500.1450409999998,
+        "p99": 3148.204249999995
+      }
+    },
+    "generate": {
+      "count": 340,
+      "usage": {
+        "inputTokens": {
+          "total": 228430,
+          "mean": 671.8529411764706,
+          "min": 463,
+          "max": 1109,
+          "p50": 655,
+          "p90": 807,
+          "p95": 949,
+          "p99": 1029
+        },
+        "outputTokens": {
+          "total": 9043,
+          "mean": 26.597058823529412,
+          "min": 23,
+          "max": 38,
+          "p50": 26,
+          "p90": 32,
+          "p95": 34,
+          "p99": 38
+        },
+        "totalTokens": {
+          "total": 237473,
+          "mean": 698.45,
+          "min": 489,
+          "max": 1132,
+          "p50": 681,
+          "p90": 833,
+          "p95": 973,
+          "p99": 1059
+        }
+      },
+      "latency": {
+        "over1sRate": 0.6147058823529412,
+        "over3sRate": 0.008823529411764706,
+        "over5sRate": 0,
+        "over10sRate": 0,
+        "total": 382191.59821300016,
+        "mean": 1124.0929359205886,
+        "min": 731.0171249999985,
+        "max": 3788.856917000001,
+        "p50": 1038.850999999995,
+        "p90": 1308.8421249999992,
+        "p95": 2145.0756249999977,
+        "p99": 2961.8980410000004
+      }
+    }
+  }
+}

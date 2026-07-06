@@ -7,4 +7,6 @@ analysis/
 .env.keys
 
 /data/
-/results/
+/results/**
+!/results/**/
+!/results/**/*.summary.json

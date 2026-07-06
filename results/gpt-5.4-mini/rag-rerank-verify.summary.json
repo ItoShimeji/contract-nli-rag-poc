@@ -1,0 +1,367 @@
+{
+  "total": 340,
+  "label": {
+    "total": 340,
+    "correct": 234,
+    "accuracy": 0.6882352941176471,
+    "byGoldLabel": {
+      "Entailment": {
+        "total": 163,
+        "correct": 133,
+        "accuracy": 0.8159509202453987,
+        "precision": 0.8109756097560976,
+        "recall": 0.8159509202453987,
+        "f1": 0.8134556574923547
+      },
+      "NotMentioned": {
+        "total": 133,
+        "correct": 79,
+        "accuracy": 0.5939849624060151,
+        "precision": 0.7053571428571429,
+        "recall": 0.5939849624060151,
+        "f1": 0.6448979591836735
+      },
+      "Contradiction": {
+        "total": 44,
+        "correct": 22,
+        "accuracy": 0.5,
+        "precision": 0.34375,
+        "recall": 0.5,
+        "f1": 0.4074074074074074
+      }
+    },
+    "confusionMatrix": {
+      "Entailment": {
+        "Entailment": 133,
+        "NotMentioned": 20,
+        "Contradiction": 10
+      },
+      "NotMentioned": {
+        "Entailment": 22,
+        "NotMentioned": 79,
+        "Contradiction": 32
+      },
+      "Contradiction": {
+        "Entailment": 9,
+        "NotMentioned": 13,
+        "Contradiction": 22
+      }
+    },
+    "macroF1": 0.6219203413611453,
+    "microF1": 0.6882352941176471,
+    "weightedF1": 0.6949724313782598
+  },
+  "evidence": {
+    "total": 207,
+    "correct": 63,
+    "correctRate": 0.30434782608695654,
+    "containsGoldCorrect": 113,
+    "containsGoldRate": 0.5458937198067633,
+    "hasOverlapCorrect": 170,
+    "hasOverlapRate": 0.821256038647343,
+    "byGoldLabel": {
+      "Entailment": {
+        "total": 163,
+        "evaluated": 163,
+        "correct": 54,
+        "correctRate": 0.3312883435582822,
+        "precision": 0.5445859872611465,
+        "recall": 0.6063829787234043,
+        "f1": 0.5738255033557047,
+        "containsGoldCorrect": 92,
+        "containsGoldRate": 0.5644171779141104,
+        "hasOverlapCorrect": 139,
+        "hasOverlapRate": 0.852760736196319
+      },
+      "NotMentioned": {
+        "total": 133,
+        "evaluated": 0,
+        "correct": 0,
+        "correctRate": null,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "containsGoldCorrect": 0,
+        "containsGoldRate": null,
+        "hasOverlapCorrect": 0,
+        "hasOverlapRate": null
+      },
+      "Contradiction": {
+        "total": 44,
+        "evaluated": 44,
+        "correct": 9,
+        "correctRate": 0.20454545454545456,
+        "precision": 0.5571428571428572,
+        "recall": 0.46987951807228917,
+        "f1": 0.5098039215686274,
+        "containsGoldCorrect": 21,
+        "containsGoldRate": 0.4772727272727273,
+        "hasOverlapCorrect": 31,
+        "hasOverlapRate": 0.7045454545454546
+      }
+    }
+  },
+  "joint": {
+    "total": 207,
+    "correct": 59,
+    "accuracy": 0.28502415458937197,
+    "containsGoldCorrect": 101,
+    "containsGoldAccuracy": 0.48792270531400966,
+    "hasOverlapCorrect": 155,
+    "hasOverlapAccuracy": 0.748792270531401,
+    "byGoldLabel": {
+      "Entailment": {
+        "total": 163,
+        "evaluated": 163,
+        "correct": 52,
+        "accuracy": 0.31901840490797545,
+        "containsGoldCorrect": 88,
+        "containsGoldAccuracy": 0.5398773006134969,
+        "hasOverlapCorrect": 133,
+        "hasOverlapAccuracy": 0.8159509202453987
+      },
+      "NotMentioned": {
+        "total": 133,
+        "evaluated": 0,
+        "correct": 0,
+        "accuracy": null,
+        "containsGoldCorrect": 0,
+        "containsGoldAccuracy": null,
+        "hasOverlapCorrect": 0,
+        "hasOverlapAccuracy": null
+      },
+      "Contradiction": {
+        "total": 44,
+        "evaluated": 44,
+        "correct": 7,
+        "accuracy": 0.1590909090909091,
+        "containsGoldCorrect": 13,
+        "containsGoldAccuracy": 0.29545454545454547,
+        "hasOverlapCorrect": 22,
+        "hasOverlapAccuracy": 0.5
+      }
+    }
+  },
+  "usage": {
+    "inputTokens": {
+      "total": 761123,
+      "mean": 2238.5970588235296,
+      "min": 1601,
+      "max": 3638,
+      "p50": 2143,
+      "p90": 2797,
+      "p95": 3147,
+      "p99": 3431
+    },
+    "outputTokens": {
+      "total": 30074,
+      "mean": 88.45294117647059,
+      "min": 73,
+      "max": 121,
+      "p50": 88,
+      "p90": 100,
+      "p95": 105,
+      "p99": 111
+    },
+    "totalTokens": {
+      "total": 791197,
+      "mean": 2327.05,
+      "min": 1678,
+      "max": 3724,
+      "p50": 2232,
+      "p90": 2890,
+      "p95": 3236,
+      "p99": 3519
+    }
+  },
+  "latency": {
+    "over1sRate": 0,
+    "over3sRate": 0,
+    "over5sRate": 0,
+    "over10sRate": 0,
+    "total": 1187718.7502849998,
+    "mean": 3493.2904420147056,
+    "min": 2453.157416999995,
+    "max": 9149.427957,
+    "p50": 3201.3716249999925,
+    "p90": 4716.15870800001,
+    "p95": 5195.555458999996,
+    "p99": 7732.574789999999
+  },
+  "stages": {
+    "retrieve": {
+      "count": 340,
+      "latency": {
+        "over1sRate": 0,
+        "over3sRate": 0,
+        "over5sRate": 0,
+        "over10sRate": 0,
+        "total": 271.9400800000119,
+        "mean": 0.7998237647059173,
+        "min": 0.17429200000003675,
+        "max": 4.8966669999999795,
+        "p50": 0.6385420000005979,
+        "p90": 1.5206669999999463,
+        "p95": 1.7225829999952111,
+        "p99": 2.327000000001135
+      }
+    },
+    "rerank": {
+      "count": 340,
+      "usage": {
+        "inputTokens": {
+          "total": 301214,
+          "mean": 885.9235294117647,
+          "min": 583,
+          "max": 1397,
+          "p50": 839,
+          "p90": 1157,
+          "p95": 1312,
+          "p99": 1384
+        },
+        "outputTokens": {
+          "total": 9456,
+          "mean": 27.811764705882354,
+          "min": 18,
+          "max": 38,
+          "p50": 30,
+          "p90": 32,
+          "p95": 38,
+          "p99": 38
+        },
+        "totalTokens": {
+          "total": 310670,
+          "mean": 913.7352941176471,
+          "min": 611,
+          "max": 1421,
+          "p50": 865,
+          "p90": 1189,
+          "p95": 1338,
+          "p99": 1415
+        }
+      },
+      "latency": {
+        "over1sRate": 0.6558823529411765,
+        "over3sRate": 0.011764705882352941,
+        "over5sRate": 0.0058823529411764705,
+        "over10sRate": 0,
+        "total": 397309.19563000003,
+        "mean": 1168.5564577352943,
+        "min": 657.8763750000071,
+        "max": 6084.685959000002,
+        "p50": 1055.0953330000048,
+        "p90": 1394.798999999999,
+        "p95": 2029.7355419999985,
+        "p99": 2976.318874999997
+      }
+    },
+    "generate": {
+      "count": 340,
+      "usage": {
+        "inputTokens": {
+          "total": 228150,
+          "mean": 671.0294117647059,
+          "min": 480,
+          "max": 1125,
+          "p50": 654,
+          "p90": 815,
+          "p95": 922,
+          "p99": 1035
+        },
+        "outputTokens": {
+          "total": 8974,
+          "mean": 26.394117647058824,
+          "min": 23,
+          "max": 40,
+          "p50": 26,
+          "p90": 30,
+          "p95": 34,
+          "p99": 38
+        },
+        "totalTokens": {
+          "total": 237124,
+          "mean": 697.4235294117647,
+          "min": 506,
+          "max": 1148,
+          "p50": 679,
+          "p90": 841,
+          "p95": 948,
+          "p99": 1059
+        }
+      },
+      "latency": {
+        "over1sRate": 0.5823529411764706,
+        "over3sRate": 0.020588235294117647,
+        "over5sRate": 0,
+        "over10sRate": 0,
+        "total": 390911.2702519997,
+        "mean": 1149.7390301529404,
+        "min": 688.2272499999999,
+        "max": 4083.4843330000003,
+        "p50": 1033.9923750000016,
+        "p90": 1409.4692499999946,
+        "p95": 2346.252875000002,
+        "p99": 3346.180958000001
+      }
+    },
+    "verify": {
+      "count": 340,
+      "usage": {
+        "inputTokens": {
+          "total": 231759,
+          "mean": 681.6441176470588,
+          "min": 491,
+          "max": 1126,
+          "p50": 663,
+          "p90": 822,
+          "p95": 933,
+          "p99": 1048
+        },
+        "outputTokens": {
+          "total": 11644,
+          "mean": 34.247058823529414,
+          "min": 30,
+          "max": 51,
+          "p50": 33,
+          "p90": 39,
+          "p95": 41,
+          "p99": 47
+        },
+        "totalTokens": {
+          "total": 243403,
+          "mean": 715.8911764705882,
+          "min": 522,
+          "max": 1157,
+          "p50": 697,
+          "p90": 857,
+          "p95": 967,
+          "p99": 1085
+        }
+      },
+      "latency": {
+        "over1sRate": 0.5970588235294118,
+        "over3sRate": 0.020588235294117647,
+        "over5sRate": 0.008823529411764706,
+        "over10sRate": 0,
+        "total": 399226.3443229998,
+        "mean": 1174.195130361764,
+        "min": 697.0141250000015,
+        "max": 6818.41412500001,
+        "p50": 1043.2537500000035,
+        "p90": 1420.6960410000029,
+        "p95": 2203.8387920000023,
+        "p99": 3552.7417920000007
+      }
+    }
+  },
+  "verifier": {
+    "total": 340,
+    "acceptCount": 144,
+    "reviseCount": 196,
+    "revisionRate": 0.5764705882352941,
+    "helpfulRevisionCount": 44,
+    "harmfulRevisionCount": 41,
+    "unchangedCorrectCount": 94,
+    "unchangedWrongCount": 161
+  }
+}
